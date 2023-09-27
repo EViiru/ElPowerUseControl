@@ -25,6 +25,7 @@ autoindent: 1
 convertcolumn_horizontally: 0
 view_line_numbers: 1
 searchlist: tZone
+searchlist: pinOut
 sync_include_hidden: 0
 snr_replacetype: 0
 bookmarks_filename_mode: 0
@@ -44,20 +45,17 @@ recent_files: file:///home/HDD_work/HDD_esko/gcc/ElSpotPrices/ElUseCntrl.cpp
 recent_files: file:///home/HDD_work/HDD_esko/gcc/ElSpotPrices/RasPiIO.hpp
 recent_files: file:///home/HDD_work/HDD_esko/gcc/ElSpotPrices/Control.hpp
 recent_files: file:///home/HDD_work/HDD_esko/gcc/ElSpotPrices/RasPiIO.cpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.cpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/ElUseCntrl.cpp
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.hpp
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.hpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.hpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.hpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.hpp
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp:0:224:1:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.hpp:0:0:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.cpp:5824:371:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.hpp:0:0:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.cpp:0:0:0:
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/ElUseCntrl.cpp
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.cpp
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.cpp:0:0:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ElUseCntrl.cpp:235:0:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.hpp:0:0:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ElUseCntrl.cpp:140:0:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.cpp:540:123:1:
 last_filefilter: 
 adv_open_matchname: 0
 editor_tab_width: 3
@@ -68,7 +66,7 @@ spell_insert_entities: 0
 htmlbar_thumbnailwidth: 300
 sync_delete_deprecated: 0
 fb_viewmode: 0
-ssearch_text: tZone
+ssearch_text: pinOut
 recent_dirs: file:///home/esko
 recent_dirs: file:///home/HDD_work/HDD_esko/gcc/ElSpotPrices
 recent_dirs: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices

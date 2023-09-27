@@ -30,10 +30,10 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	}
 	cout << "TZ: " << tZone << endl;
 	
-	system("wget https://api.porssisahko.net/v1/latest-prices.json -O SpotPrices.json 2>Success.txt" ); // Haetaan sähkön hinnat tiedostoon, 48h
+	system("wget https://api.porssisahko.net/v1/latest-prices.json -O ~/temp/SpotPrices.json 2>~/temp/Success.txt" ); // Haetaan sähkön hinnat tiedostoon, 48h
 	
 	// Tarkistetaan api-haun tilatieto	
-	ifstream f1("Success.txt"); // Taking file as inputstream
+	ifstream f1("./temp/Success.txt"); // Taking file as inputstream
    string response;
    if(f1) {
       ss1 << f1.rdbuf(); // Reading data
@@ -52,7 +52,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	}
 	
 	// Haetaan hintatiedot taulukkoon (vector))
-	ifstream f2("SpotPrices.json"); // Taking file as inputstream
+	ifstream f2("./temp/SpotPrices.json"); // Taking file as inputstream
    string prices_json;
    if(f2) {
       ss2 << f2.rdbuf(); // Reading data
@@ -215,26 +215,26 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 		
 time_t SpotPrices::chTime(string jsDate) {
 	time_t now = time(NULL);
-	tm t = *localtime(&now); // Haetaan kesä-/talviaika
+	tm t = *localtime(&now); // Haetaan kesä-/talviaika      
 	time_t retTime;
 
-	cout << "In json: " << jsDate << endl;
+//	cout << "In json: " << jsDate << endl;
 
 	t.tm_year = stoi(jsDate.substr(0, 4)) - 1900;
-		cout << "year: " << t.tm_year << " ";
+//		cout << "year: " << t.tm_year << " ";
 	t.tm_mon = stoi(jsDate.substr(5, 2)) - 1;
-		cout << "mon: " << t.tm_mon << " ";
+//		cout << "mon: " << t.tm_mon << " ";
 	t.tm_mday = stoi(jsDate.substr(8, 2));
-		cout << "day: " << t.tm_mday << " ";
+//		cout << "day: " << t.tm_mday << " ";
 	t.tm_hour = stoi(jsDate.substr(11, 2));
-		cout << "hour: " << t.tm_hour << endl;
+//		cout << "hour: " << t.tm_hour << endl;
 	t.tm_min = 0;
 	t.tm_sec = 0;
-	cout << "Dst: " << t.tm_isdst << endl;
+//	cout << "Dst: " << t.tm_isdst << endl;
 
 	retTime = mktime(&t) + tZone * 3600; // UTC ajaksi
 
-	cout << "Out: " << asctime(localtime(&retTime)) << endl;
+//	cout << "Out: " << asctime(localtime(&retTime)) << endl;
 
 	return retTime;
 

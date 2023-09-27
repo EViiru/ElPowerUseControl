@@ -6,6 +6,10 @@
 // Pääohjelma
 int main() {
 	int ret;
-	Control ctrl;
-	ret = ctrl.cntrlLoop();
+	Control ctrl; // Ohjauslogiikka
+	while(1) { // Tilakone
+		ret = ctrl.cntrlOn(); // Käynnissä
+		ret = ctrl.cntrlOff(); // Pysähdyksissä
+	}
+	return 0;
 }
