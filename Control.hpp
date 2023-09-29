@@ -17,6 +17,11 @@
 #include "RasPiIO.hpp"
 #endif
 
+#ifndef SETTINGS
+#define SETTINGS
+#include "Settings.hpp"
+#endif
+
 using namespace std;
 
 class Control {
@@ -28,13 +33,12 @@ class Control {
 		int cntrlOff(); // Ohjaus pysähdyksissä
 		
 	private:
-		// Ohjausrajat
-		array<float,2> winOut = {-9999, 0.3}; // Ulostulon ohjaus
+		// Ohjausrajat (oletusarvot)
+		array<float,2> winOut = {-9999, 2}; // Ulostulo
 		array<float,2> winGreen = {-9999, 5}; // Vihreä LED
-		array<float,2>  winYellow = {2.5, 7.5}; // Keltainen LED
-		array<float,2>  winRed = {7.5, 9999}; // Punainen LED
+		array<float,2> winYellow = {2.5, 10}; // Keltainen LED
+		array<float,2> winRed = {7.5, 9999}; // Punainen LED
 
-		SpotPrices *sp; // Hinnat
 		time_t lastUpdate = 0; // Edellinen hintojen haku
 		const time_t updateTime = 12 * 3600; // Hintojen päivitysväli
 

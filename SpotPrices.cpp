@@ -30,7 +30,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	}
 	cout << "TZ: " << tZone << endl;
 	
-	system("wget https://api.porssisahko.net/v1/latest-prices.json -O ~/temp/SpotPrices.json 2>~/temp/Success.txt" ); // Haetaan sähkön hinnat tiedostoon, 48h
+	system("wget https://api.porssisahko.net/v1/latest-prices.json -O ./temp/SpotPrices.json -o ./temp/Success.txt" ); // Haetaan sähkön hinnat tiedostoon, 48h
 	
 	// Tarkistetaan api-haun tilatieto	
 	ifstream f1("./temp/Success.txt"); // Taking file as inputstream
@@ -64,6 +64,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
    }
 
    size_t pos, start, end, next = 0;
+   hourlyPrices.clear(); // Tyhjennetään vanhat tiedot
    while (1) {   	
    	pos = prices_json.find("{\"price\":", next); // Hintarivin alku
    	if (pos > prices_json.size()) {
@@ -125,7 +126,7 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 	
 	// Tiedoston sisällön aikaleima tiedostonimeen
 	tm latestTm = *localtime(&latestTime); // Paikallinen aika
-	long int latestLInt = latestTm.tm_year - 100;
+	unsigned long int latestLInt = latestTm.tm_year - 100;
 	latestLInt = 100 * latestLInt + latestTm.tm_mon + 1;
 	latestLInt = 100 * latestLInt + latestTm.tm_mday;
 	latestLInt = 100 * latestLInt + latestTm.tm_hour;

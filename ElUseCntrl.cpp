@@ -9,7 +9,7 @@ int main() {
 	Control ctrl; // Ohjauslogiikka
 	while(1) { // Tilakone
 		ret = ctrl.cntrlOn(); // Käynnissä
-		ret = ctrl.cntrlOff(); // Pysähdyksissä
+		ret = ctrl.cntrlOff(); // Pysähdyksissäls 
 	}
 	return 0;
 }

@@ -8,6 +8,7 @@
 #include "RasPiIO.hpp"
 #endif
 
+//#define RASPI // Ohjelma on Raspberryssä ja GPIO on käytössä
           
 using namespace std;   
 
@@ -15,24 +16,28 @@ RasPiIO::RasPiIO() {
 	cout << "RasPiIO: Rakentaja" << endl;
 	
 	// Nollataan lähdöt
+#ifdef RASPI
 	setOut(0); // Ohjauslähtö
 	setGreen(0); // Vihreä LED
 	setYellow(0); // Keltainen LED
 	setRed(0); // Punainen LED
 	setHbeat(0); // Heartbeat LED
-	setRes(0); // Varaus LED	
+	setRes(0); // Varaus LED
+#endif	
 }
 
 RasPiIO::~RasPiIO() {
 	cout << "RasPiIO: Purkaja" << endl;
 	
 	// Nollataan lähdöt
+#ifdef RASPI
 	setOut(0); // Ohjauslähtö
 	setGreen(0); // Vihreä LED
 	setYellow(0); // Keltainen LED
 	setRed(0); // Punainen LED
 	setHbeat(0); // Heartbeat LED
 	setRes(0); // Varaus LED	
+#endif	
 }
 
 int RasPiIO::setOut(bool out) { // Ohjauslähtö
@@ -76,18 +81,19 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
 	string sOut = "0", sBasePath = "/sys/class/gpio/gpio", sPath;
 	sBasePath.append(gp_pin);
 	sBasePath.append("/");
-	cout << "Path1: " << sBasePath << endl;
+//	cout << "Path1: " << sBasePath << endl;
 	
 	if(out)
 		sOut = "1";
 
+#ifdef RASPI
 	fstream sysfs_handle;                                  
 
 	sysfs_handle.open ("/sys/class/gpio/export", ios::out);        
 
 	if( sysfs_handle.is_open()){
    	sysfs_handle<<gp_pin;   
-   	cout<<"GPIO " << gp_pin << " opened for EXPORT." << endl;
+//   	cout<<"GPIO " << gp_pin << " opened for EXPORT." << endl;
    	sysfs_handle.close();                                
    }else{
       cout<<"\nCan't open gpio/export\n";
@@ -95,12 +101,12 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
    }
 	sPath = sBasePath;
 	sPath.append("direction");
-	cout << "Path2: " << sPath << endl;
+//	cout << "Path2: " << sPath << endl;
 	sysfs_handle.open (sPath, ios::out);     
 
 	if( sysfs_handle.is_open()){
    	sysfs_handle<<"out";         
-   	cout<<"GPIO " << gp_pin << " opened as output pin." << endl;
+//   	cout<<"GPIO " << gp_pin << " opened as output pin." << endl;
   	 	sysfs_handle.close();                           
    }else{
       cout<<"\nCan't open gpio/direction\n";
@@ -108,7 +114,7 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
    }
 	sPath = sBasePath;
 	sPath.append("value");
-	cout << "Path3: " << sPath << endl;
+//	cout << "Path3: " << sPath << endl;
 	sysfs_handle.open (sPath, ios::out);  
 
 	if( sysfs_handle.is_open()){
@@ -119,5 +125,6 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
        cout<<"\nCan't open gpio/export\n";
       return -1;
    }
+#endif	
   	return 0;
 }

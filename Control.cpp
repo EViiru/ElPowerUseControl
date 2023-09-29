@@ -20,6 +20,9 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 	FILE *file;
 	SpotPrices sp;
 	RasPiIO raspi;
+	Settings outOn;
+	
+	ret = outOn.updateSettings("ohjausrajat.txt"); // Haetaan asetukset tiedostosta
 	
 	while(1) {
 		time_t t = time(NULL);
@@ -27,18 +30,18 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 	
 		if((t - t_prev) > 5) { //Suoritetaan 5s välein
 			t_prev = t;
-			
-			cout << "Control: cntrlOn" << endl;
-			// Tähän lopetus		
+			system("touch ./temp/alive"); // Vahtikoiralle ruokaa
+
+			// Tilan vaihto -> stop		
 			if(file = fopen ("stop","r")) {
 				fclose(file);
 				system("rm stop");
+				system("rm ./temp/*");
 				break;
 			}	
 			
-			//raspi.setHbeat(heartBeat);
+			raspi.setHbeat(heartBeat);
 			heartBeat = !heartBeat;
-//			cout << heartBeat << endl;			
 		}
 		
 		while( exMin != (cMin = lTime->tm_min)) { // Suoritetaan kerran minuutissa
@@ -56,28 +59,28 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 			
 			// Ohjauslähtö
 			outPut = 0;												
-			if((elPrice > winOut[0]) && (elPrice <= winOut[1]))
+			if((elPrice > outOn.getLowLimit("Output")) && (elPrice <= outOn.getHighLimit("Output")))
 				outPut = 1;
 			cout << "Price: " << elPrice << " Out: " << outPut << endl;			
-			//raspi.setOut(outPut);
+			raspi.setOut(outPut);
 			
 			// Vihreä LED
 			outPut = 0;														
-			if((elPrice > winGreen[0]) && (elPrice <= winGreen[1]))
+			if((elPrice > outOn.getLowLimit("Green")) && (elPrice <= outOn.getHighLimit("Green")))
 				outPut = 1;
-			//raspi.setGreen(outPut);		
+			raspi.setGreen(outPut);		
 			
 			// Keltainen LED
 			outPut = 0;														
-			if((elPrice > winYellow[0]) && (elPrice <= winYellow[1]))
+			if((elPrice > outOn.getLowLimit("Yellow")) && (elPrice <= outOn.getHighLimit("Yellow")))
 				outPut = 1;
-			//raspi.setYellow(outPut);		
+			raspi.setYellow(outPut);		
 
 			// Punainen LED
 			outPut = 0;														
-			if((elPrice > winRed[0]) && (elPrice <= winRed[1]))
+			if((elPrice > outOn.getLowLimit("Red")) && (elPrice <= outOn.getHighLimit("Red")))
 				outPut = 1;
-			//raspi.setRed(outPut);					
+			raspi.setRed(outPut);					
 			
 			exMin = cMin;	
 		}
@@ -95,9 +98,9 @@ int Control::cntrlOff() { // Ohjaus pysähdyksissä
 	
 		if((t - t_prev) > 5) { //Suoritetaan 5s välein
 			t_prev = t;
+			system("touch ./temp/alive"); // Vahtikoiralle ruokaa
 
-			cout << "Control: cntrlOff" << endl;
-			
+			// Tilan vaihto -> start					
 			if(file = fopen ("start","r")) {
 				fclose(file);
 				system("rm start");
