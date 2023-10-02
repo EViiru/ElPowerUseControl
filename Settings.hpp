@@ -19,6 +19,9 @@ class Settings {
 		float getHighLimit(string outName); // Lähdön ohjauksen yläraja
 		
 	private:
+		int parseSetLine(string tRivi); // Puretaan asetusrivi ja talletetaan muuttuneet asetukset
+		float strToFloat(string sLuku); // Merkkijonon tarkastus ja muunto liukuluvuksi
+		
 		// Ohjausrajat
 		struct OutputCntrl {
 			string Name; // Lähdön nimi
