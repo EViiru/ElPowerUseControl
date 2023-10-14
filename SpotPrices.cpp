@@ -103,7 +103,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 }
 
 float SpotPrices::getPrice(time_t tTime) { // Kysytyn ajan hintatieto
-	cout << "SpotPrices: getPrice" << endl;
+//	cout << "SpotPrices: getPrice" << endl;
 	
 	float elPrice = 99999; // Hintaa ei löytynyt
 	
