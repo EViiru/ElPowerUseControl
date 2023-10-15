@@ -1,9 +1,8 @@
-#ifndef SHELLYPLUGS
-#define SHELLYPLUGS
+#ifndef SHELLYPLUGS_HPP
+#define SHELLYPLUGS_HPP
 #include "ShellyPlugS.hpp"
 #endif
 
-using namespace std;
 
 ShellyPlugS::ShellyPlugS(string baseAddrIP) {
 	cout << "ShellyPlugS: Rakentaja" << endl;
@@ -40,7 +39,7 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 		else {
 			endpCall_.append("?turn=off");
 		}
-		endpCall_.append(" -O ./temp/StatusRel0.txt -o ./temp/ReturnRel0.txt");
+		endpCall_.append(" -O ./temp/StatusRel0.txt -o ./temp/QueryRespRel0.txt");
 		system(endpCall_.data()); // Asetetaan lähdön tila
 
 	}
@@ -53,14 +52,14 @@ int ShellyPlugS::readOut() { // Kytkennän tila
 	string endpCall_ = "wget --timeout=5 --tries=2 "; // Muodostetaan endpoint-kutsu (REST API)
 	endpCall_.append(baseAddrIP_);
 	endpCall_.append("relay/0");
-	endpCall_.append(" -O ./temp/StatusRel0.txt -o ./temp/ReturnRel0.txt");
+	endpCall_.append(" -O ./temp/StatusRel0.txt -o ./temp/QueryRespRel0.txt");
 
 	system(endpCall_.data()); // Haetaan lähdön tila
 	
 	ostringstream ss1_, ss2_;
 	
 	// Tarkistetaan api-haun tilatieto	
-	ifstream f1_("./temp/ReturnRel0.txt"); // Taking file as inputstream
+	ifstream f1_("./temp/QueryRespRel0.txt"); // Taking file as inputstream
    string response_;
    if(f1_) {
       ss1_ << f1_.rdbuf(); // Reading data
@@ -71,7 +70,7 @@ int ShellyPlugS::readOut() { // Kytkennän tila
    	return -1;
    }
 	if (response_.find("200 OK") != -1) { // Onnistuiko haku?
-		cout << "Haku onnistui" << endl;
+//		cout << "Haku onnistui" << endl;
 	}
 	else {
 		cout << "Haku epäonnistui" << endl;
@@ -99,7 +98,7 @@ int ShellyPlugS::readOut() { // Kytkennän tila
    end_ = status_.find(",", start_); // Parametrin loppu
 	string parIson_ = status_.substr(start_, end_ - start_);
 	
-	cout << parIson_ << endl;
+//	cout << parIson_ << endl;
 	
 	if (parIson_.find("true", 0) <= parIson_.size()) {
 		return 1;	

@@ -1,16 +1,10 @@
-//#include <cstdlib>
-//#include <unistd.h>
-//#include <string>
-
-
-#ifndef RASPIIO
-#define RASPIIO
+#ifndef RASPIIO_HPP
+#define RASPIIO_HPP
 #include "RasPiIO.hpp"
 #endif
 
- #define RASPI // Ohjelma on Raspberryssä ja GPIO on käytössä
+#define RASPI // Ohjelma on Raspberryssä ja GPIO on käytössä
           
-using namespace std;   
 
 RasPiIO::RasPiIO() {
 	cout << "RasPiIO: Rakentaja" << endl;

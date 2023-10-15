@@ -7,20 +7,26 @@
 #include <vector>
 #include <array>
 
-#ifndef SPOTPRICES
-#define SPOTPRICES
+#ifndef SPOTPRICES_HPP
+#define SPOTPRICES_HPP
 #include "SpotPrices.hpp"
 #endif
 
-#ifndef RASPIIO
-#define RASPIIO
+#ifndef RASPIIO_HPP
+#define RASPIIO_HPP
 #include "RasPiIO.hpp"
 #endif
 
-#ifndef SETTINGS
-#define SETTINGS
+#ifndef SETTINGS_HPP
+#define SETTINGS_HPP
 #include "Settings.hpp"
 #endif
+
+#ifndef SHELLYPLUGS_HPP
+#define SHELLYPLUGS_HPP
+#include "ShellyPlugS.hpp"
+#endif
+
 
 using namespace std;
 
@@ -40,6 +46,7 @@ class Control {
 		array<float,2> winRed = {7.5, 9999}; // Punainen LED
 
 		time_t lastUpdate = 0; // Edellinen hintojen haku
-		const time_t updateTime = 12 * 3600; // Hintojen päivitysväli
+		time_t const UPDATE_TIME = 12 * 3600; // Hintojen päivitysväli
+		string const SHELLYPLUGS_IP = "http://192.168.10.37/"; // ShellyPlugS IP-osoite
 
 };

@@ -1,9 +1,14 @@
 // Raspberryn GPIO
 
 #include <iostream>
+using std::cout;
+using std::endl;
+using std::ios;
 #include <fstream>
+using std::fstream;
 
-using namespace std;
+using std::string;
+
 
 class RasPiIO {
 

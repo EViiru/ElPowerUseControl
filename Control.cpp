@@ -21,6 +21,7 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 	SpotPrices sp;
 	RasPiIO raspi;
 	Settings outOn;
+	ShellyPlugS plug01(SHELLYPLUGS_IP);
 	
 	ret = outOn.updateSettings("ohjausrajat.txt"); // Haetaan asetukset tiedostosta
 	
@@ -47,7 +48,7 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 		while( exMin != (cMin = lTime.tm_min)) { // Suoritetaan kerran minuutissa
 //			cout << "Control: cntrl " << cMin << endl;
 			
-			if((time(NULL) - lastUpdate) > updateTime) { // Päivitetään hinnat
+			if((time(NULL) - lastUpdate) > UPDATE_TIME) { // Päivitetään hinnat
 				ret = sp.updatePrices();
 				if(!ret) {
 					sp.savePrices("ElPrices_.csv"); // Tallennetaan hinnat tiedostoon
@@ -69,6 +70,7 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 			}
 //			cout << "1 exOut: " << exOut << endl;
 			raspi.setOut(outPut);
+			ret = plug01.setOut(outPut);
 			
 			// Vihreä LED
 			bitMask = 0x02;
