@@ -16,7 +16,7 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 	bool outPut = 0, heartBeat = 0;
 	float elPrice;
 	time_t t_prev = 0;
-	lastUpdate = 0;
+	nextUpdate = 0;
 	FILE *file;
 	SpotPrices sp;
 	RasPiIO raspi;
@@ -48,11 +48,13 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 		while( exMin != (cMin = lTime.tm_min)) { // Suoritetaan kerran minuutissa
 //			cout << "Control: cntrl " << cMin << endl;
 			
-			if((time(NULL) - lastUpdate) > UPDATE_TIME) { // Päivitetään hinnat
+			if((time(NULL) - nextUpdate) > 0) { // Päivitetään hinnat
 				ret = sp.updatePrices();
 				if(!ret) {
+					nextUpdate = sp.getLatestTime() - UPDATE_TIME; // Seuraava hintojen päivitysaika,
+					srand(time(NULL));
+					nextUpdate -= rand() % 3600; // johon lisätään vähän hajontaa
 					sp.savePrices("ElPrices_.csv"); // Tallennetaan hinnat tiedostoon
-					lastUpdate = time(NULL);
 				}
 			}
 			

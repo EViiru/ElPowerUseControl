@@ -16,6 +16,7 @@ class SpotPrices {
 		int updatePrices(); // Hakee hintatiedot API:sta
 		float getPrice(time_t tTime); // Kysytyn ajan hintatieto
 		int savePrices(string file); // Tallentaa hintatiedot tekstitiedostoon, erotin ;
+		time_t getLatestTime(); // Viimeisen hintatiedon loppuaika 
 		
 	private:
 		time_t chTime(string jsDate);

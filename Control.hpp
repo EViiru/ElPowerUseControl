@@ -45,8 +45,8 @@ class Control {
 		array<float,2> winYellow = {2.5, 10}; // Keltainen LED
 		array<float,2> winRed = {7.5, 9999}; // Punainen LED
 
-		time_t lastUpdate = 0; // Edellinen hintojen haku
-		time_t const UPDATE_TIME = 12 * 3600; // Hintojen päivitysväli
+		time_t nextUpdate = 0; // Seuraava hintojen haku
+		time_t const UPDATE_TIME = 8 * 3600; // Hintojen päivitys, aika ennen edellisten tietojen loppumista
 		string const SHELLYPLUGS_IP = "http://192.168.10.37/"; // ShellyPlugS IP-osoite
 
 };

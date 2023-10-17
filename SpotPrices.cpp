@@ -213,6 +213,10 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
  
 	return 0;
 }
+
+time_t SpotPrices::getLatestTime() { // Viimeisen hintatiedon loppuaika
+	return latestTime;
+} 
 		
 time_t SpotPrices::chTime(string jsDate) {
 	time_t now = time(NULL);

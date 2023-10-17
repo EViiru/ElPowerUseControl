@@ -39,7 +39,7 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 		else {
 			endpCall_.append("?turn=off");
 		}
-		endpCall_.append(" -O ./temp/StatusRel0.txt -o ./temp/QueryRespRel0.txt");
+		endpCall_.append(" -O ./temp/StatusRel0.json -o ./temp/QueryStatus.txt");
 		system(endpCall_.data()); // Asetetaan lähdön tila
 
 	}
@@ -52,14 +52,14 @@ int ShellyPlugS::readOut() { // Kytkennän tila
 	string endpCall_ = "wget --timeout=5 --tries=2 "; // Muodostetaan endpoint-kutsu (REST API)
 	endpCall_.append(baseAddrIP_);
 	endpCall_.append("relay/0");
-	endpCall_.append(" -O ./temp/StatusRel0.txt -o ./temp/QueryRespRel0.txt");
+	endpCall_.append(" -O ./temp/StatusRel0.json -o ./temp/QueryStatus.txt");
 
 	system(endpCall_.data()); // Haetaan lähdön tila
 	
 	ostringstream ss1_, ss2_;
 	
 	// Tarkistetaan api-haun tilatieto	
-	ifstream f1_("./temp/QueryRespRel0.txt"); // Taking file as inputstream
+	ifstream f1_("./temp/QueryStatus.txt"); // Taking file as inputstream
    string response_;
    if(f1_) {
       ss1_ << f1_.rdbuf(); // Reading data
@@ -78,7 +78,7 @@ int ShellyPlugS::readOut() { // Kytkennän tila
 	}
 
 	// Haetaan lähdön tila
-	ifstream f2_("./temp/StatusRel0.txt"); // Taking file as inputstream
+	ifstream f2_("./temp/StatusRel0.json"); // Taking file as inputstream
    string status_;
    if(f2_) {
       ss2_ << f2_.rdbuf(); // Reading data
