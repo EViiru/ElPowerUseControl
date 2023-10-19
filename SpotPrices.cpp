@@ -1,6 +1,6 @@
 
-#ifndef SPOTPRICES
-#define SPOTPRICES
+#ifndef SPOTPRICES_HPP
+#define SPOTPRICES_HPP
 #include "SpotPrices.hpp"
 #endif
 
@@ -23,14 +23,15 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	tm locTime = *localtime(&now);
 	tm gmtTime = *gmtime(&now);
 	cout << "Loc: " << asctime(&locTime);
-	cout << "Gmt: " << asctime(&gmtTime);
+//	cout << "Gmt: " << asctime(&gmtTime);
 	tZone = locTime.tm_hour - gmtTime.tm_hour; // -23...+23
 	if(tZone <= -12 || tZone > 12) {
 		tZone = tZone - 24 * (tZone / abs(tZone)); // -11...+12	
 	}
-	cout << "TZ: " << tZone << endl;
+//	cout << "TZ: " << tZone << endl;
 	
-	system("wget https://api.porssisahko.net/v1/latest-prices.json -O ./temp/SpotPrices.json -o ./temp/Success.txt" ); // Haetaan sähkön hinnat tiedostoon, 48h
+	// Haetaan sähkön hinnat tiedostoon, 48h
+	system("wget --timeout=5 --tries=1 https://api.porssisahko.net/v1/latest-prices.json -O ./temp/SpotPrices.json -o ./temp/Success.txt" ); 
 	
 	// Tarkistetaan api-haun tilatieto	
 	ifstream f1("./temp/Success.txt"); // Taking file as inputstream

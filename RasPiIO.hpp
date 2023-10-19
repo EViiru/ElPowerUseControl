@@ -10,44 +10,95 @@ using std::fstream;
 using std::string;
 
 
+/**
+\brief Raspberry Pi:n lähtöjen ohjaus.
+*
+* Ohjataan Raspberry Pi:n lähtöjä "Linux-tyylisesti" tiedostojärjestelmän kautta:
+* + otetaan ohjauspinnit käyttöön,
+* + määritetään ne lähdöiksi ja
+* + ohjataan niitä päälle/pois.
+*/
 class RasPiIO {
 
 	public:
+/**
+* Rakentajassa varmistetaan, että lähdöt ovat pois päältä.
+*/
 		RasPiIO();
+/**
+* Purkajassa varmistetaan, että lähdöt ovat pois päältä.
+*/
 		~RasPiIO();
-		int setOut(bool out); // Ohjauslähtö
-		int setGreen(bool out); // Vihreä LED
-		int setYellow(bool out); // Keltainen LED
-		int setRed(bool out); // Punainen LED
-		int setHbeat(bool out); // Heartbeat LED
-		int setRes(bool out); // Varaus LED
+/**
+* Kytkee ohjauslähdön päälle/pois.
+* \param out 
+* + true : päälle 
+* + false : pois
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int setOut(bool out);
+/**
+* Kytkee vihreän LED:in päälle/pois.
+* \param out 
+* + true : päälle 
+* + false : pois
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int setGreen(bool out);
+/**
+* Kytkee keltaisen LED:in päälle/pois.
+* \param out 
+* + true : päälle 
+* + false : pois
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int setYellow(bool out);
+/**
+* Kytkee punaisen LED:in päälle/pois.
+* \param out 
+* + true : päälle 
+* + false : pois
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int setRed(bool out);
+/**
+* Kytkee heartbeat-LED:in päälle/pois.
+* \param out 
+* + true : päälle 
+* + false : pois
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int setHbeat(bool out);
+/**
+* Kytkee varaus-LED:in päälle/pois.
+* \param out 
+* + true : päälle 
+* + false : pois
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int setRes(bool out);
 		
 	private:
-		int setOutPin(bool out, string gp_pin); // Lähdön ohjaus
-		// Lähdöt
-		struct pinOut_t { // Ohjauslähtö
-			bool inv = 1;
-			string pin = "24";
-		} pinOut;
-		struct pinGreen_t { // Ohjauslähtö
-			bool inv = 1;
-			string pin = "14";
-		} pinGreen;
-		struct pinYellow_t { // Ohjauslähtö
-			bool inv = 1;
-			string pin = "15";
-		} pinYellow;
-		struct pinRed_t { // Ohjauslähtö
-			bool inv = 1;
-			string pin = "18";
-		} pinRed;
-		struct pinHbeat_t { // Ohjauslähtö
-			bool inv = 1;
-			string pin = "23";
-		} pinHbeat;
-		struct pinRes_t { // Ohjauslähtö
-			bool inv = 1;
-			string pin = "25";
-		} pinRes;
+		int setOutPin(bool out, string gp_pin); /**< Lähdön ohjaus */
+
+		struct PinOut {
+			bool inv_ = 1; /**< 1 : Alhaalla aktiivinen lähtö */
+			string pin_ = "24"; /**< GPIO-numero */
+		} pinOut_; /**< Ohjauslähtö */
+			
+		PinOut pinGreen_ = {1, "14"}; /**< LED, vihreä */
+		PinOut pinYellow_ = {1, "15"}; /**< LED, keltainen */
+		PinOut pinRed_ = {1, "18"}; /**< LED, punainen */
+		PinOut pinHbeat_ = {1, "23"}; /**< LED, pulssi */
+		PinOut pinRes_ = {1, "25"}; /**< Varalähtö */
+		
+		RasPiIO(RasPiIO const& src); /**< Kopiorakentaja (oletus) estetty */
+		RasPiIO& operator=(RasPiIO const& src); /**< Sijoitus (oletus) estetty */
 
 };

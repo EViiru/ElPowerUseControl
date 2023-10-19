@@ -1,32 +1,65 @@
 // Asetusarvot
 
 #include <iostream>
+using std::cout;
+using std::endl;
 #include <fstream>
+using std::ifstream;
 #include <sstream>
-#include <string>
+using std::ostringstream;
 #include <vector>
-#include <array>
+using std::vector;
 
-using namespace std;
+using std::string;
 
+
+/**
+\brief Ohjelman asetusarvot
+*
+* Hakee ohjelman asetusarvot tiedostosta.
+*/
 class Settings {
 
 	public:
+/**
+* Rakentajassa määritellään oletusarvot asetuksille. Ne voidaan korvata tiedostosta luettavilla arvoilla.
+*/
 		Settings();
+/**
+* Purkajassa ei ole toimintoja.
+*/
 		~Settings();
-		int updateSettings(string fileName); // Haetaan asetukset tiedostosta
-		float getLowLimit(string outName); // Lähdön ohjauksen alaraja
-		float getHighLimit(string outName); // Lähdön ohjauksen yläraja
+/**
+* Hakee asetusarvot tiedostosta.
+* \param fileName : asetusarvotiedoston nimi 
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int updateSettings(string fileName);
+/**
+* Palauttaa asetuksen alarajan.
+* \param outName : lähdön nimi 
+* \return <9999 : asetuksen alaraja
+* \return 9999 : virhe
+*/
+		float getLowLimit(string outName);
+/**
+* Palauttaa asetuksen ylärajan.
+* \param outName : lähdön nimi 
+* \return >-9999 : asetuksen yläraja
+* \return -9999 : virhe
+*/
+		float getHighLimit(string outName);
 		
 	private:
-		int parseSetLine(string tRivi); // Puretaan asetusrivi ja talletetaan muuttuneet asetukset
-		float strToFloat(string sLuku); // Merkkijonon tarkastus ja muunto liukuluvuksi
+		int parseSetLine(string tRivi); /**< Puretaan asetusrivi ja talletetaan muuttuneet asetukset */
+		float strToFloat(string sLuku); /**< Merkkijonon tarkastus ja muunto liukuluvuksi */
 		
 		// Ohjausrajat
 		struct OutputCntrl {
-			string Name; // Lähdön nimi
-			float alar; // Alaraja
-			float ylar; // Yläraja
-		} outputCntrl;
-		vector <OutputCntrl> outputLimits;		
+			string Name_; /**< Lähdön nimi */
+			float alar_; /**< Alaraja */
+			float ylar_; /**< Yläraja */
+		} outputCntrl_; /**< Yhden lähdön tiedot */
+		vector <OutputCntrl> outputLimits_; /**< Kaikkien lähtöjen tiedot */
 };

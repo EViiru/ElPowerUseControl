@@ -35,50 +35,50 @@ RasPiIO::~RasPiIO() {
 }
 
 int RasPiIO::setOut(bool out) { // Ohjauslähtö
-	out = out ^ pinOut.inv;
-	int ret = setOutPin(out, pinOut.pin);
-	return ret;
+	out = out ^ pinOut_.inv_;
+	int ret_ = setOutPin(out, pinOut_.pin_);
+	return ret_;
 }
 
 int RasPiIO::setGreen(bool out) { // Vihreä LED
-	out = out ^ pinGreen.inv;
-	int ret = setOutPin(out, pinGreen.pin);
-	return ret;
+	out = out ^ pinGreen_.inv_;
+	int ret_ = setOutPin(out, pinGreen_.pin_);
+	return ret_;
 }
 
 int RasPiIO::setYellow(bool out) { // Keltainen LED
-	out = out ^ pinYellow.inv;
-	int ret = setOutPin(out, pinYellow.pin);
-	return ret;
+	out = out ^ pinYellow_.inv_;
+	int ret_ = setOutPin(out, pinYellow_.pin_);
+	return ret_;
 }
 
 int RasPiIO::setRed(bool out) { // Punainen LED
-	out = out ^ pinRed.inv;
-	int ret = setOutPin(out, pinRed.pin);
-	return ret;
+	out = out ^ pinRed_.inv_;
+	int ret_ = setOutPin(out, pinRed_.pin_);
+	return ret_;
 }
 
 int RasPiIO::setHbeat(bool out) { // Heartbeat LED
-	out = out ^ pinHbeat.inv;
-	int ret = setOutPin(out, pinHbeat.pin);
-	return ret;
+	out = out ^ pinHbeat_.inv_;
+	int ret_ = setOutPin(out, pinHbeat_.pin_);
+	return ret_;
 }
 
 int RasPiIO::setRes(bool out) { // Varaus LED
-	out = out ^ pinRes.inv;
-	int ret = setOutPin(out, pinRes.pin);
-	return ret;
+	out = out ^ pinRes_.inv_;
+	int ret_ = setOutPin(out, pinRes_.pin_);
+	return ret_;
 }
 
 
 int RasPiIO::setOutPin(bool out, string gp_pin) {
-	string sOut = "0", sBasePath = "/sys/class/gpio/gpio", sPath;
-	sBasePath.append(gp_pin);
-	sBasePath.append("/");
-//	cout << "Path1: " << sBasePath << endl;
+	string sOut_ = "0", sBasePath_ = "/sys/class/gpio/gpio", sPath_;
+	sBasePath_.append(gp_pin);
+	sBasePath_.append("/");
+//	cout << "Path1: " << sBasePath_ << endl;
 	
 	if(out)
-		sOut = "1";
+		sOut_ = "1";
 
 #ifdef RASPI
 	fstream sysfs_handle;                                  
@@ -93,10 +93,10 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
       cout << "Can't open gpio/export: " << gp_pin << endl;
       return -1;
    }
-	sPath = sBasePath;
-	sPath.append("direction");
-//	cout << "Path2: " << sPath << endl;
-	sysfs_handle.open (sPath, ios::out);     
+	sPath_ = sBasePath_;
+	sPath_.append("direction");
+//	cout << "Path2: " << sPath_ << endl;
+	sysfs_handle.open (sPath_, ios::out);     
 
 	if( sysfs_handle.is_open()){
    	sysfs_handle << "out";         
@@ -106,14 +106,14 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
       cout << "Can't open gpio/direction: " << gp_pin << endl;
       return -1;      
    }
-	sPath = sBasePath;
-	sPath.append("value");
-//	cout << "Path3: " << sPath << endl;
-	sysfs_handle.open (sPath, ios::out);  
+	sPath_ = sBasePath_;
+	sPath_.append("value");
+//	cout << "Path3: " << sPath_ << endl;
+	sysfs_handle.open (sPath_, ios::out);  
 
 	if( sysfs_handle.is_open()){
-      sysfs_handle << sOut;
-//      cout << "GPIO " << gp_pin << " turned " << sOut  << endl;
+      sysfs_handle << sOut_;
+//      cout << "GPIO " << gp_pin << " turned " << sOut_  << endl;
       sysfs_handle.close();
    }else{
        cout << "Can't open gpio/value: " << gp_pin << endl;

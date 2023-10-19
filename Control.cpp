@@ -1,5 +1,5 @@
-#ifndef CONTROL
-#define CONTROL
+#ifndef CONTROL_HPP
+#define CONTROL_HPP
 #include "Control.hpp"
 #endif
 

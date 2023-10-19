@@ -3,7 +3,6 @@
 #include "ShellyPlugS.hpp"
 #endif
 
-
 ShellyPlugS::ShellyPlugS(string baseAddrIP) {
 	cout << "ShellyPlugS: Rakentaja" << endl;
 	
@@ -30,7 +29,7 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 	bool currSt_ = bool(currStInt_);
 		
 	if (out ^ currSt_) { // Tarvitseeko vaihtaa?
-		string endpCall_ = "wget --timeout=5 --tries=2 "; // Muodostetaan endpoint-kutsu (REST API)
+		string endpCall_ = "wget --timeout=5 --tries=1 "; // Muodostetaan endpoint-kutsu (REST API)
 		endpCall_.append(baseAddrIP_);
 		endpCall_.append("relay/0");
 		if (out) { 		
@@ -49,7 +48,7 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 
 int ShellyPlugS::readOut() { // Kytkennän tila
 
-	string endpCall_ = "wget --timeout=5 --tries=2 "; // Muodostetaan endpoint-kutsu (REST API)
+	string endpCall_ = "wget --timeout=5 --tries=1 "; // Muodostetaan endpoint-kutsu (REST API)
 	endpCall_.append(baseAddrIP_);
 	endpCall_.append("relay/0");
 	endpCall_.append(" -O ./temp/StatusRel0.json -o ./temp/QueryStatus.txt");
