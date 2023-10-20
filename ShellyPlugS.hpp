@@ -51,4 +51,5 @@ class ShellyPlugS {
 		
 		ShellyPlugS(ShellyPlugS const& src); /**< Kopiorakentaja (oletus) estetty */
 		ShellyPlugS& operator=(ShellyPlugS const& src); /**< Sijoitus (oletus) estetty */
+		
 };

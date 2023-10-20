@@ -1,33 +1,76 @@
 // Sähkön hintatiedot
 
 #include <iostream>
+using std::cout;
+using std::endl;
+using std::ios;
 #include <fstream>
+using std::ifstream;
+using std::fstream;
 #include <sstream>
-#include <string>
+using std::ostringstream;
 #include <vector>
+using std::vector;
 
-using namespace std;
+using std::string;
+using std::to_string;
 
+/**
+\brief Sähkön hintatiedot
+*
+* Hakee pörssisähkön hintatiedot verkosta (https://api.porssisahko.net) ja tallentaa ne levylle historiatiedoksi.
+*/
 class SpotPrices {
 
 	public:
+/**
+* Rakentajassa ei ole toimintoja.
+*/
 		SpotPrices();
+/**
+* Purkajassa ei ole toimintoja.
+*/
 		~SpotPrices();
-		int updatePrices(); // Hakee hintatiedot API:sta
-		float getPrice(time_t tTime); // Kysytyn ajan hintatieto
+/**
+* Hakee pörssisähkön hintatiedot verkosta.
+* \return 0 : OK
+* \return -1 : virhe
+*/
+		int updatePrices();
+/**
+* Palauttaa kysytyn ajan hintatiedon.
+* \param tTime : Aika, jonka hintatieto halutaan. 
+* \return <99999 : Kysytyn ajan hintatieto.
+* \return 99999 : Virhe, hintaa ei löytynyt.
+*/
+		float getPrice(time_t tTime);
+/**
+* Tallentaa hintatiedot tekstitiedostoon, kenttäerotin: ";"
+* \param file : Tiedostonimen vakio-osa. Tiedostonimeen lisätään viimeisen hintatiedon aikaleima. 
+* \return 0 : OK
+* \return -1 : virhe
+*/
 		int savePrices(string file); // Tallentaa hintatiedot tekstitiedostoon, erotin ;
-		time_t getLatestTime(); // Viimeisen hintatiedon loppuaika 
+/**
+* Palauttaa viimeisen hintatiedon loppuajan.
+* \return >0 : Viimeisen hintatiedon loppuaika.
+* \return 0 : Virhe, aikaa ei löytynyt.
+*/
+		time_t getLatestTime(); 
 		
 	private:
-		time_t chTime(string jsDate);
+		time_t chTime(string jsDate); /**< Muuttaa json-aikatiedon unix/linux-ajaksi. */
 		
-		time_t latestTime = 0; // Viimeisen hintatiedon loppuaika
-		int tZone; // Aikavyöhyke sis. kesäajan
-		struct hPrice_t {
-			float price; // Hinta
-			time_t start; // Alkuaika
-			time_t end; // Loppuaika
-		} hourPrice;
-		vector <hPrice_t> hourlyPrices;		
+		time_t latestTime_ = 0; /**< Viimeisen hintatiedon loppuaika */
+		int tZone_; /**< Aikavyöhyke sis. kesäajan */
+		struct HPrice {
+			float price_; /**< Hinta */
+			time_t start_; /**< Alkuaika */
+			time_t end_; /**< Loppuaika */
+		} hourPrice_; /**< Sähkön tuntihinta (yksi tunti) */
+		vector <HPrice> hourlyPrices_; /**< Sähkön viimeiset tuntihinnat */
+		
+		SpotPrices(SpotPrices const& src); /**< Kopiorakentaja (oletus) estetty */
+		SpotPrices& operator=(SpotPrices const& src); /**< Sijoitus (oletus) estetty */
 
 };

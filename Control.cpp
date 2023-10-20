@@ -12,108 +12,108 @@ Control::~Control() {
 }
 
 int Control::cntrlOn() { // Ohjaus käynnissä
-	int exMin = 0, exOut = 0, cMin, ret;
-	bool outPut = 0, heartBeat = 0;
-	float elPrice;
-	time_t t_prev = 0;
-	nextUpdate = 0;
-	FILE *file;
-	SpotPrices sp;
-	RasPiIO raspi;
-	Settings outOn;
-	ShellyPlugS plug01(SHELLYPLUGS_IP);
+	int exMin_ = 0, exOut_ = 0, cMin_, ret_;
+	bool outPut_ = 0, heartBeat_ = 0;
+	float elPrice_;
+	time_t t_prev_ = 0;
+	nextUpdate_ = 0;
+	FILE *file_;
+	SpotPrices sp_;
+	RasPiIO raspi_;
+	Settings outOn_;
+	ShellyPlugS plug01_(SHELLYPLUGS_IP);
 	
-	ret = outOn.updateSettings("ohjausrajat.txt"); // Haetaan asetukset tiedostosta
+	ret_ = outOn_.updateSettings(FILENAME_SETTINGS); // Haetaan asetukset tiedostosta
 	
 	while(1) {
-		time_t t = time(NULL);
-		tm lTime = *localtime(&t);
+		time_t t_ = time(NULL);
+		tm lTime_ = *localtime(&t_);
 	
-		if((t - t_prev) > 5) { //Suoritetaan 5s välein
-			t_prev = t;
+		if((t_ - t_prev_) > 5) { //Suoritetaan 5s välein
+			t_prev_ = t_;
 			system("touch ./temp/alive"); // Vahtikoiralle ruokaa
 
 			// Tilan vaihto -> stop		
-			if(file = fopen ("stop","r")) {
-				fclose(file);
+			if(file_ = fopen ("stop","r")) {
+				fclose(file_);
 				system("rm stop");
 				system("rm ./temp/*");
 				break;
 			}	
 			
-			raspi.setHbeat(heartBeat);
-			heartBeat = !heartBeat;
+			raspi_.setHbeat(heartBeat_);
+			heartBeat_ = !heartBeat_;
 		}
 		
-		while( exMin != (cMin = lTime.tm_min)) { // Suoritetaan kerran minuutissa
+		while( exMin_ != (cMin_ = lTime_.tm_min)) { // Suoritetaan kerran minuutissa
 //			cout << "Control: cntrl " << cMin << endl;
 			
-			if((time(NULL) - nextUpdate) > 0) { // Päivitetään hinnat
-				ret = sp.updatePrices();
-				if(!ret) {
-					nextUpdate = sp.getLatestTime() - UPDATE_TIME; // Seuraava hintojen päivitysaika,
+			if((time(NULL) - nextUpdate_) > 0) { // Päivitetään hinnat
+				ret_ = sp_.updatePrices();
+				if(!ret_) {
+					nextUpdate_ = sp_.getLatestTime() - UPDATE_TIME; // Seuraava hintojen päivitysaika,
 					srand(time(NULL));
-					nextUpdate -= rand() % 3600; // johon lisätään vähän hajontaa
-					sp.savePrices("ElPrices_.csv"); // Tallennetaan hinnat tiedostoon
+					nextUpdate_ -= rand() % 3600; // johon lisätään vähän hajontaa
+					sp_.savePrices(FILENAME_PRICES); // Tallennetaan hinnat tiedostoon
 				}
 			}
 			
-			elPrice = sp.getPrice(time(NULL));
+			elPrice_ = sp_.getPrice(time(NULL));
 			
 			// Ohjauslähtö
-			int bitMask = 0x01;
-			outPut = 0;												
-			if((elPrice > outOn.getLowLimit("Output")) && (elPrice <= outOn.getHighLimit("Output")))
-				outPut = 1;
-			if(outPut != bool(exOut & bitMask)) {
-				outPut ? exOut |= bitMask : exOut &=  ~bitMask;
-				cout << "Time: " << asctime(&lTime);
-				cout << "Price: " << elPrice << " Out: " << outPut << endl;							
+			int bitMask_ = 0x01;
+			outPut_ = 0;												
+			if((elPrice_ > outOn_.getLowLimit("Output")) && (elPrice_ <= outOn_.getHighLimit("Output")))
+				outPut_ = 1;
+			if(outPut_ != bool(exOut_ & bitMask_)) {
+				outPut_ ? exOut_ |= bitMask_ : exOut_ &=  ~bitMask_;
+				cout << "Time: " << asctime(&lTime_);
+				cout << "Price: " << elPrice_ << " Out: " << outPut_ << endl;							
 			}
-//			cout << "1 exOut: " << exOut << endl;
-			raspi.setOut(outPut);
-			ret = plug01.setOut(outPut);
+//			cout << "1 exOut: " << exOut_ << endl;
+			raspi_.setOut(outPut_);
+			ret_ = plug01_.setOut(outPut_);
 			
 			// Vihreä LED
-			bitMask = 0x02;
-			outPut = 0;														
-			if((elPrice > outOn.getLowLimit("Green")) && (elPrice <= outOn.getHighLimit("Green")))
-				outPut = 1;
-			if(outPut != bool(exOut & bitMask)) {
-				outPut ? exOut |= bitMask : exOut &= ~bitMask;
-				cout << "Time: " << asctime(&lTime);
-				cout << "Price: " << elPrice << " Green: " << outPut << endl;							
+			bitMask_ = 0x02;
+			outPut_ = 0;														
+			if((elPrice_ > outOn_.getLowLimit("Green")) && (elPrice_ <= outOn_.getHighLimit("Green")))
+				outPut_ = 1;
+			if(outPut_ != bool(exOut_ & bitMask_)) {
+				outPut_ ? exOut_ |= bitMask_ : exOut_ &= ~bitMask_;
+				cout << "Time: " << asctime(&lTime_);
+				cout << "Price: " << elPrice_ << " Green: " << outPut_ << endl;							
 			}				
-//			cout << "2 exOut: " << exOut << endl;
-			raspi.setGreen(outPut);		
+//			cout << "2 exOut: " << exOut_ << endl;
+			raspi_.setGreen(outPut_);		
 			
 			// Keltainen LED
-			bitMask = 0x04;
-			outPut = 0;														
-			if((elPrice > outOn.getLowLimit("Yellow")) && (elPrice <= outOn.getHighLimit("Yellow")))
-				outPut = 1;
-			if(outPut != bool(exOut & bitMask)) {
-				outPut ? exOut |= bitMask : exOut &= ~bitMask;
-				cout << "Time: " << asctime(&lTime);
-				cout << "Price: " << elPrice << " Yellow: " << outPut << endl;							
+			bitMask_ = 0x04;
+			outPut_ = 0;														
+			if((elPrice_ > outOn_.getLowLimit("Yellow")) && (elPrice_ <= outOn_.getHighLimit("Yellow")))
+				outPut_ = 1;
+			if(outPut_ != bool(exOut_ & bitMask_)) {
+				outPut_ ? exOut_ |= bitMask_ : exOut_ &= ~bitMask_;
+				cout << "Time: " << asctime(&lTime_);
+				cout << "Price: " << elPrice_ << " Yellow: " << outPut_ << endl;							
 			}				
-//			cout << "3 exOut: " << exOut << endl;
-			raspi.setYellow(outPut);		
+//			cout << "3 exOut: " << exOut_ << endl;
+			raspi_.setYellow(outPut_);		
 
 			// Punainen LED
-			bitMask = 0x08;
-			outPut = 0;														
-			if((elPrice > outOn.getLowLimit("Red")) && (elPrice <= outOn.getHighLimit("Red")))
-				outPut = 1;
-			if(outPut != bool(exOut & bitMask)) {
-				outPut ? exOut |= bitMask : exOut &= ~bitMask;
-				cout << "Time: " << asctime(&lTime);
-				cout << "Price: " << elPrice << " Red: " << outPut << endl;							
+			bitMask_ = 0x08;
+			outPut_ = 0;														
+			if((elPrice_ > outOn_.getLowLimit("Red")) && (elPrice_ <= outOn_.getHighLimit("Red")))
+				outPut_ = 1;
+			if(outPut_ != bool(exOut_ & bitMask_)) {
+				outPut_ ? exOut_ |= bitMask_ : exOut_ &= ~bitMask_;
+				cout << "Time: " << asctime(&lTime_);
+				cout << "Price: " << elPrice_ << " Red: " << outPut_ << endl;							
 			}				
-//			cout << "4 exOut: " << exOut << endl;
-			raspi.setRed(outPut);					
+//			cout << "4 exOut: " << exOut_ << endl;
+			raspi_.setRed(outPut_);					
 			
-			exMin = cMin;	
+			exMin_ = cMin_;	
 		}
 
 	}
@@ -121,19 +121,19 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 }
 
 int Control::cntrlOff() { // Ohjaus pysähdyksissä
-	time_t t_prev = 0;
-	FILE *file;
+	time_t t_prev_ = 0;
+	FILE *file_;
 
 	while(1) {
-		time_t t = time(NULL);
+		time_t t_ = time(NULL);
 	
-		if((t - t_prev) > 5) { //Suoritetaan 5s välein
-			t_prev = t;
+		if((t_ - t_prev_) > 5) { //Suoritetaan 5s välein
+			t_prev_ = t_;
 			system("touch ./temp/alive"); // Vahtikoiralle ruokaa
 
 			// Tilan vaihto -> start					
-			if(file = fopen ("start","r")) {
-				fclose(file);
+			if(file_ = fopen ("start","r")) {
+				fclose(file_);
 				system("rm start");
 				break;
 			}	

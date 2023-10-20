@@ -3,7 +3,7 @@
 #include "RasPiIO.hpp"
 #endif
 
-#define RASPI // Ohjelma on Raspberryssä ja GPIO on käytössä
+//#define RASPI // Ohjelma on Raspberryssä ja GPIO on käytössä
           
 
 RasPiIO::RasPiIO() {

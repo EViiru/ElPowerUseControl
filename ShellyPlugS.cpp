@@ -3,6 +3,8 @@
 #include "ShellyPlugS.hpp"
 #endif
 
+//#define SHELLYPLUGS // ShellyPlugS on käytössä
+
 ShellyPlugS::ShellyPlugS(string baseAddrIP) {
 	cout << "ShellyPlugS: Rakentaja" << endl;
 	
@@ -20,6 +22,7 @@ ShellyPlugS::~ShellyPlugS() {
 
 int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
  
+#ifdef SHELLYPLUGS
 	int currStInt_;
 	if ((currStInt_ = readOut()) < 0) {
 		cout << "Tiedon lukuvirhe" << endl;
@@ -42,12 +45,14 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 		system(endpCall_.data()); // Asetetaan lähdön tila
 
 	}
+#endif
 	 	
  	return 0;
 }
 
 int ShellyPlugS::readOut() { // Kytkennän tila
 
+#ifdef SHELLYPLUGS
 	string endpCall_ = "wget --timeout=5 --tries=1 "; // Muodostetaan endpoint-kutsu (REST API)
 	endpCall_.append(baseAddrIP_);
 	endpCall_.append("relay/0");
@@ -105,11 +110,10 @@ int ShellyPlugS::readOut() { // Kytkennän tila
 	else if (parIson_.find("false", 0) <= parIson_.size()) {
 		return 0;	
 	}
-	else {
+#endif
 	
-	}
-		cout << "Parametrin arvon haku epäonnistui" << endl;
-		return -1;
+	cout << "Parametrin arvon haku epäonnistui" << endl;
+	return -1;
 
 }
   

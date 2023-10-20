@@ -62,4 +62,8 @@ class Settings {
 			float ylar_; /**< Yläraja */
 		} outputCntrl_; /**< Yhden lähdön tiedot */
 		vector <OutputCntrl> outputLimits_; /**< Kaikkien lähtöjen tiedot */
+				
+		Settings(Settings const& src); /**< Kopiorakentaja (oletus) estetty */
+		Settings& operator=(Settings const& src); /**< Sijoitus (oletus) estetty */
+
 };

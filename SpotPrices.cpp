@@ -16,35 +16,35 @@ SpotPrices::~SpotPrices() {
 int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.net
 	cout << "SpotPrices: updatePrices" << endl;
 	
-	ostringstream ss1, ss2;
+	ostringstream ss1_, ss2_;
 	
 	// Aikavyöhyke
-	time_t now = time(NULL);
-	tm locTime = *localtime(&now);
-	tm gmtTime = *gmtime(&now);
-	cout << "Loc: " << asctime(&locTime);
-//	cout << "Gmt: " << asctime(&gmtTime);
-	tZone = locTime.tm_hour - gmtTime.tm_hour; // -23...+23
-	if(tZone <= -12 || tZone > 12) {
-		tZone = tZone - 24 * (tZone / abs(tZone)); // -11...+12	
+	time_t now_ = time(NULL);
+	tm locTime_ = *localtime(&now_);
+	tm gmtTime_ = *gmtime(&now_);
+	cout << "Loc: " << asctime(&locTime_);
+//	cout << "Gmt: " << asctime(&gmtTime_);
+	tZone_ = locTime_.tm_hour - gmtTime_.tm_hour; // -23...+23
+	if(tZone_ <= -12 || tZone_ > 12) {
+		tZone_ = tZone_ - 24 * (tZone_ / abs(tZone_)); // -11...+12	
 	}
-//	cout << "TZ: " << tZone << endl;
+//	cout << "TZ: " << tZone_ << endl;
 	
 	// Haetaan sähkön hinnat tiedostoon, 48h
 	system("wget --timeout=5 --tries=1 https://api.porssisahko.net/v1/latest-prices.json -O ./temp/SpotPrices.json -o ./temp/Success.txt" ); 
 	
 	// Tarkistetaan api-haun tilatieto	
-	ifstream f1("./temp/Success.txt"); // Taking file as inputstream
-   string response;
-   if(f1) {
-      ss1 << f1.rdbuf(); // Reading data
-      response = ss1.str();
+	ifstream f1_("./temp/Success.txt"); // Taking file as inputstream
+   string response_;
+   if(f1_) {
+      ss1_ << f1_.rdbuf(); // Reading data
+      response_ = ss1_.str();
    }
    else {
    	cout << "Tiedoston luku epäonnistui" << endl;
    	return -1;
    }
-	if (response.find("200 OK") != -1) { // Onnistuiko haku?
+	if (response_.find("200 OK") != -1) { // Onnistuiko haku?
 		cout << "Haku onnistui" << endl;
 	}
 	else {
@@ -53,51 +53,51 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	}
 	
 	// Haetaan hintatiedot taulukkoon (vector))
-	ifstream f2("./temp/SpotPrices.json"); // Taking file as inputstream
-   string prices_json;
-   if(f2) {
-      ss2 << f2.rdbuf(); // Reading data
-      prices_json = ss2.str();
+	ifstream f2_("./temp/SpotPrices.json"); // Taking file as inputstream
+   string prices_json_;
+   if(f2_) {
+      ss2_ << f2_.rdbuf(); // Reading data
+      prices_json_ = ss2_.str();
    }
    else {
    	cout << "Tiedoston luku epäonnistui" << endl;
    	return -1;   	
    }
 
-   size_t pos, start, end, next = 0;
-   hourlyPrices.clear(); // Tyhjennetään vanhat tiedot
+   size_t pos_, start_, end_, next_ = 0;
+   hourlyPrices_.clear(); // Tyhjennetään vanhat tiedot
    while (1) {   	
-   	pos = prices_json.find("{\"price\":", next); // Hintarivin alku
-   	if (pos > prices_json.size()) {
+   	pos_ = prices_json_.find("{\"price\":", next_); // Hintarivin alku
+   	if (pos_ > prices_json_.size()) {
    		break;
    	}
 
    	// Hinta
-   	start = pos + 9;
-   	end = prices_json.find(",", start);
-   	hourPrice.price = stof(prices_json.substr(start, end - start)); // Hinta
+   	start_ = pos_ + 9;
+   	end_ = prices_json_.find(",", start_);
+   	hourPrice_.price_ = stof(prices_json_.substr(start_, end_ - start_)); // Hinta
  
  		// Alkuaika
-   	start = prices_json.find("startDate", pos);
-   	start += 12;
-   	end = prices_json.find(",", start) -1;
-   	string startTime = prices_json.substr(start, end - start); // Alkuaika
-   	hourPrice.start = chTime(startTime);   	
+   	start_ = prices_json_.find("startDate", pos_);
+   	start_ += 12;
+   	end_ = prices_json_.find(",", start_) -1;
+   	string startTime_ = prices_json_.substr(start_, end_ - start_); // Alkuaika
+   	hourPrice_.start_ = chTime(startTime_);   	
 
  		// Loppuaika
-   	start = prices_json.find("endDate", pos);
-   	start += 10;
-   	end = prices_json.find("}", start) -1;
-   	string endTime = prices_json.substr(start, end - start); // Loppuaika
-   	hourPrice.end = chTime(endTime);
+   	start_ = prices_json_.find("endDate", pos_);
+   	start_ += 10;
+   	end_ = prices_json_.find("}", start_) -1;
+   	string endTime_ = prices_json_.substr(start_, end_ - start_); // Loppuaika
+   	hourPrice_.end_ = chTime(endTime_);
    	
-   	if(hourPrice.end > latestTime) // Tietojen loppuaika
-   		latestTime = hourPrice.end;   	   	
+   	if(hourPrice_.end_ > latestTime_) // Tietojen loppuaika
+   		latestTime_ = hourPrice_.end_;   	   	
   	
    	// Tiedot tuntihintataulukkoon (vector)
-   	hourlyPrices.push_back(hourPrice);
+   	hourlyPrices_.push_back(hourPrice_);
    			  	
-   	next = pos + 1;
+   	next_ = pos_ + 1;
    }	
    	
 	return 0;
@@ -106,106 +106,106 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 float SpotPrices::getPrice(time_t tTime) { // Kysytyn ajan hintatieto
 //	cout << "SpotPrices: getPrice" << endl;
 	
-	float elPrice = 99999; // Hintaa ei löytynyt
+	float elPrice_ = 99999; // Hintaa ei löytynyt
 	
-	for (vector<hPrice_t>::iterator it = hourlyPrices.begin() ; it != hourlyPrices.end(); ++it) {
-		hourPrice = *it;
+	for (vector<HPrice>::iterator it_ = hourlyPrices_.begin() ; it_ != hourlyPrices_.end(); ++it_) {
+		hourPrice_ = *it_;
 
-/*		cout << hourPrice.price << " " \
-			<< hourPrice.start << " " \
-			<< hourPrice.end << endl;
+/*		cout << hourPrice_.price_ << " " \
+			<< hourPrice_.start_ << " " \
+			<< hourPrice_.end_ << endl;
 */
-		if(hourPrice.start <= tTime && hourPrice.end > tTime)
-			elPrice = hourPrice.price;		
+		if(hourPrice_.start_ <= tTime && hourPrice_.end_ > tTime)
+			elPrice_ = hourPrice_.price_;		
 	}
 
-	return elPrice;
+	return elPrice_;
 }
 
 int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 	cout << "SpotPrices: savePrices" << endl;
 	
 	// Tiedoston sisällön aikaleima tiedostonimeen
-	tm latestTm = *localtime(&latestTime); // Paikallinen aika
-	unsigned long int latestLInt = latestTm.tm_year - 100;
-	latestLInt = 100 * latestLInt + latestTm.tm_mon + 1;
-	latestLInt = 100 * latestLInt + latestTm.tm_mday;
-	latestLInt = 100 * latestLInt + latestTm.tm_hour;
-	latestLInt = 100 * latestLInt + latestTm.tm_min;	
-	string extraDef = to_string(latestLInt);
+	tm latestTm_ = *localtime(&latestTime_); // Paikallinen aika
+	unsigned long int latestLInt_ = latestTm_.tm_year - 100;
+	latestLInt_ = 100 * latestLInt_ + latestTm_.tm_mon + 1;
+	latestLInt_ = 100 * latestLInt_ + latestTm_.tm_mday;
+	latestLInt_ = 100 * latestLInt_ + latestTm_.tm_hour;
+	latestLInt_ = 100 * latestLInt_ + latestTm_.tm_min;	
+	string extraDef_ = to_string(latestLInt_);
 	
-	size_t pos;
-	if(pos = file.find("."))
-		file.replace(pos, 0, extraDef);
+	size_t pos_;
+	if(pos_ = file.find("."))
+		file.replace(pos_, 0, extraDef_);
 		
-	fstream oFile;
-	oFile.open(file, ios::out | ios::trunc);
-	if (oFile.is_open()){		
-		for (vector<hPrice_t>::iterator it = hourlyPrices.begin() ; it != hourlyPrices.end(); ++it) {
-			hourPrice = *it;
-			tm startTime, endTime;
-			string oneLine;
-			size_t pos;
+	fstream oFile_;
+	oFile_.open(file, ios::out | ios::trunc);
+	if (oFile_.is_open()){		
+		for (vector<HPrice>::iterator it_ = hourlyPrices_.begin() ; it_ != hourlyPrices_.end(); ++it_) {
+			hourPrice_ = *it_;
+			tm startTime_, endTime_;
+			string oneLine_;
+			size_t pos_;
 				
-			startTime = *localtime(&hourPrice.start); // Paikallinen aika
-			endTime = *localtime(&hourPrice.end); // Paikallinen aika
+			startTime_ = *localtime(&hourPrice_.start_); // Paikallinen aika
+			endTime_ = *localtime(&hourPrice_.end_); // Paikallinen aika
 		
-			oneLine = to_string(hourPrice.price);
-			pos = 0;
-			if(pos = oneLine.find("."))
-				oneLine.replace(pos, 1, ",");
-			oneLine += ";";
+			oneLine_ = to_string(hourPrice_.price_);
+			pos_ = 0;
+			if(pos_ = oneLine_.find("."))
+				oneLine_.replace(pos_, 1, ",");
+			oneLine_ += ";";
 
-			if(startTime.tm_mday < 10)
-				oneLine += "0"; 
-			oneLine += to_string(startTime.tm_mday);
-			oneLine += ".";
-			if(startTime.tm_mon + 1 < 10)
-				oneLine += "0"; 
-			oneLine += to_string(startTime.tm_mon + 1);	
-			oneLine += ".";
-			oneLine += to_string(startTime.tm_year + 1900);
-			oneLine += ";";
+			if(startTime_.tm_mday < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(startTime_.tm_mday);
+			oneLine_ += ".";
+			if(startTime_.tm_mon + 1 < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(startTime_.tm_mon + 1);	
+			oneLine_ += ".";
+			oneLine_ += to_string(startTime_.tm_year + 1900);
+			oneLine_ += ";";
 
-			if(startTime.tm_hour < 10)
-				oneLine += "0"; 
-			oneLine += to_string(startTime.tm_hour);
-			oneLine += ":";
-			if(startTime.tm_min < 10)
-				oneLine += "0"; 
-			oneLine += to_string(startTime.tm_min);
-			oneLine += ":";			
-			if(startTime.tm_sec < 10)
-				oneLine += "0"; 
-			oneLine += to_string(startTime.tm_sec);	
-			oneLine += ";";
+			if(startTime_.tm_hour < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(startTime_.tm_hour);
+			oneLine_ += ":";
+			if(startTime_.tm_min < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(startTime_.tm_min);
+			oneLine_ += ":";			
+			if(startTime_.tm_sec < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(startTime_.tm_sec);	
+			oneLine_ += ";";
 
-			if(endTime.tm_mday < 10)
-				oneLine += "0"; 
-			oneLine += to_string(endTime.tm_mday);
-			oneLine += ".";
-			if(endTime.tm_mon + 1 < 10)
-				oneLine += "0"; 
-			oneLine += to_string(endTime.tm_mon + 1);	
-			oneLine += ".";
-			oneLine += to_string(endTime.tm_year + 1900);
-			oneLine += ";";
+			if(endTime_.tm_mday < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(endTime_.tm_mday);
+			oneLine_ += ".";
+			if(endTime_.tm_mon + 1 < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(endTime_.tm_mon + 1);	
+			oneLine_ += ".";
+			oneLine_ += to_string(endTime_.tm_year + 1900);
+			oneLine_ += ";";
 
-			if(endTime.tm_hour < 10)
-				oneLine += "0"; 
-			oneLine += to_string(endTime.tm_hour);
-			oneLine += ":";
-			if(endTime.tm_min < 10)
-				oneLine += "0"; 
-			oneLine += to_string(endTime.tm_min);
-			oneLine += ":";			
-			if(endTime.tm_sec < 10)
-				oneLine += "0"; 
-			oneLine += to_string(endTime.tm_sec);	
+			if(endTime_.tm_hour < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(endTime_.tm_hour);
+			oneLine_ += ":";
+			if(endTime_.tm_min < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(endTime_.tm_min);
+			oneLine_ += ":";			
+			if(endTime_.tm_sec < 10)
+				oneLine_ += "0"; 
+			oneLine_ += to_string(endTime_.tm_sec);	
 
-			oFile << oneLine << endl;
+			oFile_ << oneLine_ << endl;
  	  }
-	  oFile.close();
+	  oFile_.close();
 	}
 	else {
 		cout << "File open error" << endl;
@@ -216,33 +216,33 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 }
 
 time_t SpotPrices::getLatestTime() { // Viimeisen hintatiedon loppuaika
-	return latestTime;
+	return latestTime_;
 } 
 		
 time_t SpotPrices::chTime(string jsDate) {
-	time_t now = time(NULL);
-	tm t = *localtime(&now); // Haetaan kesä-/talviaika      
-	time_t retTime;
+	time_t now_ = time(NULL);
+	tm t_ = *localtime(&now_); // Haetaan kesä-/talviaika      
+	time_t retTime_;
 
 //	cout << "In json: " << jsDate << endl;
 
-	t.tm_year = stoi(jsDate.substr(0, 4)) - 1900;
-//		cout << "year: " << t.tm_year << " ";
-	t.tm_mon = stoi(jsDate.substr(5, 2)) - 1;
-//		cout << "mon: " << t.tm_mon << " ";
-	t.tm_mday = stoi(jsDate.substr(8, 2));
-//		cout << "day: " << t.tm_mday << " ";
-	t.tm_hour = stoi(jsDate.substr(11, 2));
-//		cout << "hour: " << t.tm_hour << endl;
-	t.tm_min = 0;
-	t.tm_sec = 0;
-//	cout << "Dst: " << t.tm_isdst << endl;
+	t_.tm_year = stoi(jsDate.substr(0, 4)) - 1900;
+//		cout << "year: " << t_.tm_year << " ";
+	t_.tm_mon = stoi(jsDate.substr(5, 2)) - 1;
+//		cout << "mon: " << t_.tm_mon << " ";
+	t_.tm_mday = stoi(jsDate.substr(8, 2));
+//		cout << "day: " << t_.tm_mday << " ";
+	t_.tm_hour = stoi(jsDate.substr(11, 2));
+//		cout << "hour: " << t_.tm_hour << endl;
+	t_.tm_min = 0;
+	t_.tm_sec = 0;
+//	cout << "Dst: " << t_.tm_isdst << endl;
 
-	retTime = mktime(&t) + tZone * 3600; // UTC ajaksi
+	retTime_ = mktime(&t_) + tZone_ * 3600; // UTC ajaksi
 
-//	cout << "Out: " << asctime(localtime(&retTime)) << endl;
+//	cout << "Out: " << asctime(localtime(&retTime_)) << endl;
 
-	return retTime;
+	return retTime_;
 
 }
 
