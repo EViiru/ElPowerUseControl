@@ -74,7 +74,6 @@ int ShellyPlugS::readOut() { // Kytkennän tila
    	return -1;
    }
 	if (response_.find("200 OK") != -1) { // Onnistuiko haku?
-//		cout << "Haku onnistui" << endl;
 	}
 	else {
 		cout << "ShellyPlugS: Haku epäonnistui" << endl;
@@ -101,9 +100,7 @@ int ShellyPlugS::readOut() { // Kytkennän tila
    }
    end_ = status_.find(",", start_); // Parametrin loppu
 	string parIson_ = status_.substr(start_, end_ - start_);
-	
-//	cout << parIson_ << endl;
-	
+		
 	if (parIson_.find("true", 0) <= parIson_.size()) {
 		return 1;	
 	}

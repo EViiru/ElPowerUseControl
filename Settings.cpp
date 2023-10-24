@@ -34,12 +34,12 @@ Settings::~Settings() {
 
 int Settings::updateSettings(string fileName) { // Haetaan asetukset tiedostosta: ohjausrajat.txt
 	// Haetaan asetusarvot tiedostosta
-	ifstream f3_(fileName); // Taking file as inputstream
+	ifstream f3_(fileName);
    string rajat_, tietorivi_;
    ostringstream ss3_;
 
    if(f3_) {
-      ss3_ << f3_.rdbuf(); // Reading data
+      ss3_ << f3_.rdbuf();
       rajat_ = ss3_.str();
       
       size_t start_, end_, next_ = 0;

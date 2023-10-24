@@ -46,7 +46,6 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 		}
 		
 		while( exMin_ != (cMin_ = lTime_.tm_min)) { // Suoritetaan kerran minuutissa
-//			cout << "Control: cntrl " << cMin << endl;
 			
 			if((time(NULL) - nextUpdate_) > 0) { // Päivitetään hinnat
 				ret_ = sp_.updatePrices();
@@ -70,7 +69,6 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 				cout << "Time: " << asctime(&lTime_);
 				cout << "Price: " << elPrice_ << " Out: " << outPut_ << endl;							
 			}
-//			cout << "1 exOut: " << exOut_ << endl;
 			raspi_.setOut(outPut_);
 			ret_ = plug01_.setOut(outPut_);
 			
@@ -84,7 +82,6 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 				cout << "Time: " << asctime(&lTime_);
 				cout << "Price: " << elPrice_ << " Green: " << outPut_ << endl;							
 			}				
-//			cout << "2 exOut: " << exOut_ << endl;
 			raspi_.setGreen(outPut_);		
 			
 			// Keltainen LED
@@ -97,7 +94,6 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 				cout << "Time: " << asctime(&lTime_);
 				cout << "Price: " << elPrice_ << " Yellow: " << outPut_ << endl;							
 			}				
-//			cout << "3 exOut: " << exOut_ << endl;
 			raspi_.setYellow(outPut_);		
 
 			// Punainen LED
@@ -110,7 +106,6 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 				cout << "Time: " << asctime(&lTime_);
 				cout << "Price: " << elPrice_ << " Red: " << outPut_ << endl;							
 			}				
-//			cout << "4 exOut: " << exOut_ << endl;
 			raspi_.setRed(outPut_);					
 			
 			exMin_ = cMin_;	

@@ -63,12 +63,6 @@ class Control {
 		int cntrlOff();
 		
 	private:
-		// Ohjausrajat (oletusarvot)
-		array<float,2> winOut_ = {-9999, 2}; /**< Ohjausrajat, ulostulo */
-		array<float,2> winGreen_ = {-9999, 5}; /**< Ohjausrajat, vihreä LED */
-		array<float,2> winYellow_ = {2.5, 10}; /**< Ohjausrajat, keltainen LED */
-		array<float,2> winRed_ = {7.5, 9999}; /**< Ohjausrajat, punainen LED */
-
 		time_t nextUpdate_ = 0; /**< Seuraava hintojen haku */
 		time_t const UPDATE_TIME = 8 * 3600; /**< Hintojen päivitys, aika ennen edellisten tietojen loppumista */
 		string const SHELLYPLUGS_IP = "http://192.168.10.37/"; /**< ShellyPlugS IP-osoite */

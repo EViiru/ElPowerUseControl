@@ -75,7 +75,6 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
 	string sOut_ = "0", sBasePath_ = "/sys/class/gpio/gpio", sPath_;
 	sBasePath_.append(gp_pin);
 	sBasePath_.append("/");
-//	cout << "Path1: " << sBasePath_ << endl;
 	
 	if(out)
 		sOut_ = "1";
@@ -87,7 +86,6 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
 
 	if( sysfs_handle.is_open()){
    	sysfs_handle << gp_pin;   
-//   	cout<<"GPIO " << gp_pin << " opened for EXPORT." << endl;
    	sysfs_handle.close();                                
    }else{
       cout << "RasPiIO: Ei voi avata gpio/export: " << gp_pin << endl;
@@ -95,7 +93,6 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
    }
 	sPath_ = sBasePath_;
 	sPath_.append("direction");
-//	cout << "Path2: " << sPath_ << endl;
 
 	time_t bg = time(NULL);
 	while (1) {
@@ -109,12 +106,10 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
 		}	
 	}
    sysfs_handle << "out";         
-// cout<<"GPIO " << gp_pin << " opened as output pin." << endl;
 	sysfs_handle.close();                           
 
 	sPath_ = sBasePath_;
 	sPath_.append("value");
-//	cout << "Path3: " << sPath_ << endl;
 
 	bg = time(NULL);
 	while (1) {
@@ -128,7 +123,6 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
       }
 	}
    sysfs_handle << sOut_;
-// cout << "GPIO " << gp_pin << " turned " << sOut_  << endl;
    sysfs_handle.close();
    
 #endif	

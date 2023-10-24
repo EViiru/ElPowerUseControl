@@ -22,21 +22,19 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	tm locTime_ = *localtime(&now_);
 	tm gmtTime_ = *gmtime(&now_);
 	cout << "Time: " << asctime(&locTime_);
-//	cout << "Gmt: " << asctime(&gmtTime_);
 	tZone_ = locTime_.tm_hour - gmtTime_.tm_hour; // -23...+23
 	if(tZone_ <= -12 || tZone_ > 12) {
 		tZone_ = tZone_ - 24 * (tZone_ / abs(tZone_)); // -11...+12	
 	}
-//	cout << "TZ: " << tZone_ << endl;
 	
 	// Haetaan sähkön hinnat tiedostoon, 48h
 	system("wget --timeout=5 --tries=1 https://api.porssisahko.net/v1/latest-prices.json -O ./temp/SpotPrices.json -o ./temp/Success.txt" ); 
 	
 	// Tarkistetaan api-haun tilatieto	
-	ifstream f1_("./temp/Success.txt"); // Taking file as inputstream
+	ifstream f1_("./temp/Success.txt");
    string response_;
    if(f1_) {
-      ss1_ << f1_.rdbuf(); // Reading data
+      ss1_ << f1_.rdbuf();
       response_ = ss1_.str();
    }
    else {
@@ -52,10 +50,10 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	}
 	
 	// Haetaan hintatiedot taulukkoon (vector))
-	ifstream f2_("./temp/SpotPrices.json"); // Taking file as inputstream
+	ifstream f2_("./temp/SpotPrices.json");
    string prices_json_;
    if(f2_) {
-      ss2_ << f2_.rdbuf(); // Reading data
+      ss2_ << f2_.rdbuf();
       prices_json_ = ss2_.str();
    }
    else {
@@ -103,17 +101,11 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 }
 
 float SpotPrices::getPrice(time_t tTime) { // Kysytyn ajan hintatieto
-//	cout << "SpotPrices: getPrice" << endl;
 	
 	float elPrice_ = 99999; // Hintaa ei löytynyt
 	
 	for (vector<HPrice>::iterator it_ = hourlyPrices_.begin() ; it_ != hourlyPrices_.end(); ++it_) {
 		hourPrice_ = *it_;
-
-/*		cout << hourPrice_.price_ << " " \
-			<< hourPrice_.start_ << " " \
-			<< hourPrice_.end_ << endl;
-*/
 		if(hourPrice_.start_ <= tTime && hourPrice_.end_ > tTime)
 			elPrice_ = hourPrice_.price_;		
 	}
@@ -223,23 +215,14 @@ time_t SpotPrices::chTime(string jsDate) {
 	tm t_ = *localtime(&now_); // Haetaan kesä-/talviaika      
 	time_t retTime_;
 
-//	cout << "In json: " << jsDate << endl;
-
 	t_.tm_year = stoi(jsDate.substr(0, 4)) - 1900;
-//		cout << "year: " << t_.tm_year << " ";
 	t_.tm_mon = stoi(jsDate.substr(5, 2)) - 1;
-//		cout << "mon: " << t_.tm_mon << " ";
 	t_.tm_mday = stoi(jsDate.substr(8, 2));
-//		cout << "day: " << t_.tm_mday << " ";
 	t_.tm_hour = stoi(jsDate.substr(11, 2));
-//		cout << "hour: " << t_.tm_hour << endl;
 	t_.tm_min = 0;
 	t_.tm_sec = 0;
-//	cout << "Dst: " << t_.tm_isdst << endl;
 
 	retTime_ = mktime(&t_) + tZone_ * 3600; // UTC ajaksi
-
-//	cout << "Out: " << asctime(localtime(&retTime_)) << endl;
 
 	return retTime_;
 
