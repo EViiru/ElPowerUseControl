@@ -90,35 +90,47 @@ int RasPiIO::setOutPin(bool out, string gp_pin) {
 //   	cout<<"GPIO " << gp_pin << " opened for EXPORT." << endl;
    	sysfs_handle.close();                                
    }else{
-      cout << "Can't open gpio/export: " << gp_pin << endl;
+      cout << "RasPiIO: Ei voi avata gpio/export: " << gp_pin << endl;
       return -1;
    }
 	sPath_ = sBasePath_;
 	sPath_.append("direction");
 //	cout << "Path2: " << sPath_ << endl;
-	sysfs_handle.open (sPath_, ios::out);     
 
-	if( sysfs_handle.is_open()){
-   	sysfs_handle << "out";         
-//   	cout<<"GPIO " << gp_pin << " opened as output pin." << endl;
-  	 	sysfs_handle.close();                           
-   }else{
-      cout << "Can't open gpio/direction: " << gp_pin << endl;
-      return -1;      
-   }
+	time_t bg = time(NULL);
+	while (1) {
+		sysfs_handle.open (sPath_, ios::out);     
+		if(sysfs_handle.is_open()) {
+			break;
+		}
+		else if ((time(NULL) - bg) > 2) { // Timeout
+      	cout << "RasPiIO: Ei voi avata gpio/direction: " << gp_pin << endl;
+      	return -1;      		
+		}	
+	}
+   sysfs_handle << "out";         
+// cout<<"GPIO " << gp_pin << " opened as output pin." << endl;
+	sysfs_handle.close();                           
+
 	sPath_ = sBasePath_;
 	sPath_.append("value");
 //	cout << "Path3: " << sPath_ << endl;
-	sysfs_handle.open (sPath_, ios::out);  
 
-	if( sysfs_handle.is_open()){
-      sysfs_handle << sOut_;
-//      cout << "GPIO " << gp_pin << " turned " << sOut_  << endl;
-      sysfs_handle.close();
-   }else{
-       cout << "Can't open gpio/value: " << gp_pin << endl;
-      return -1;
-   }
+	bg = time(NULL);
+	while (1) {
+		sysfs_handle.open (sPath_, ios::out);  
+		if(sysfs_handle.is_open()) {
+			break;
+		}
+		else if ((time(NULL) - bg) > 2) { // Timeout
+      	cout << "RasPiIO: Ei voi avata gpio/value: " << gp_pin << endl;
+      	return -1;
+      }
+	}
+   sysfs_handle << sOut_;
+// cout << "GPIO " << gp_pin << " turned " << sOut_  << endl;
+   sysfs_handle.close();
+   
 #endif	
   	return 0;
 }

@@ -50,13 +50,13 @@ class SpotPrices {
 * \return 0 : OK
 * \return -1 : virhe
 */
-		int savePrices(string file); // Tallentaa hintatiedot tekstitiedostoon, erotin ;
+		int savePrices(string file);
 /**
 * Palauttaa viimeisen hintatiedon loppuajan.
 * \return >0 : Viimeisen hintatiedon loppuaika.
 * \return 0 : Virhe, aikaa ei löytynyt.
 */
-		time_t getLatestTime(); 
+		time_t getLatestTime() const; 
 		
 	private:
 		time_t chTime(string jsDate); /**< Muuttaa json-aikatiedon unix/linux-ajaksi. */

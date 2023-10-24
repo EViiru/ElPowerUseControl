@@ -1,4 +1,3 @@
-
 #ifndef SPOTPRICES_HPP
 #define SPOTPRICES_HPP
 #include "SpotPrices.hpp"
@@ -22,7 +21,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	time_t now_ = time(NULL);
 	tm locTime_ = *localtime(&now_);
 	tm gmtTime_ = *gmtime(&now_);
-	cout << "Loc: " << asctime(&locTime_);
+	cout << "Time: " << asctime(&locTime_);
 //	cout << "Gmt: " << asctime(&gmtTime_);
 	tZone_ = locTime_.tm_hour - gmtTime_.tm_hour; // -23...+23
 	if(tZone_ <= -12 || tZone_ > 12) {
@@ -41,14 +40,14 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
       response_ = ss1_.str();
    }
    else {
-   	cout << "Tiedoston luku epäonnistui" << endl;
+   	cout << "SpotPrices: Tiedoston luku epäonnistui, status" << endl;
    	return -1;
    }
 	if (response_.find("200 OK") != -1) { // Onnistuiko haku?
-		cout << "Haku onnistui" << endl;
+		cout << "SpotPrices: Haku onnistui" << endl;
 	}
 	else {
-		cout << "Haku epäonnistui" << endl;
+		cout << "SpotPrices: Haku epäonnistui" << endl;
 		return -1;
 	}
 	
@@ -60,7 +59,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
       prices_json_ = ss2_.str();
    }
    else {
-   	cout << "Tiedoston luku epäonnistui" << endl;
+   	cout << "SpotPrices: Tiedoston luku epäonnistui, data" << endl;
    	return -1;   	
    }
 
@@ -208,14 +207,14 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 	  oFile_.close();
 	}
 	else {
-		cout << "File open error" << endl;
+		cout << "SpotPrices: Tiedoston avausvirhe" << endl;
 		return -1;	
 	}
  
 	return 0;
 }
 
-time_t SpotPrices::getLatestTime() { // Viimeisen hintatiedon loppuaika
+time_t SpotPrices::getLatestTime() const { // Viimeisen hintatiedon loppuaika
 	return latestTime_;
 } 
 		

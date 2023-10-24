@@ -64,18 +64,18 @@ int Settings::updateSettings(string fileName) { // Haetaan asetukset tiedostosta
 			tietorivi_ = rajat_.substr(start_, end_ - start_);
 			
 			if(parseSetLine(tietorivi_))
-				cout << "Tietorivin tulkinta ei onnistunut." << endl;
+				cout << "Settings: Tietorivin tulkinta ei onnistunut." << endl;
 			
    		next_ = end_;
    	}	
    	
    	for (vector<OutputCntrl>::iterator it_ = outputLimits_.begin() ; it_ != outputLimits_.end(); ++it_) {
 			outputCntrl_ = *it_;
-			cout << "Nimi: " << outputCntrl_.Name_ << " ala: " << outputCntrl_.alar_ << " ylä: " << outputCntrl_.ylar_ << endl;		
+			cout << outputCntrl_.Name_ << " ala: " << outputCntrl_.alar_ << " ylä: " << outputCntrl_.ylar_ << endl;		
    	}
    }
    else {
-   	cout << "Tiedoston ohjausrajat.txt luku epäonnistui: käytetään oletusarvoja." << endl;
+   	cout << "Settings: Asetustiedoston luku epäonnistui: käytetään oletusarvoja." << endl;
    	return -1;  	
    }
 
@@ -142,7 +142,7 @@ int Settings::parseSetLine(string tRivi) { // Puretaan asetusrivi ja talletetaan
 			luku_ = tRivi.substr(start_, end_ - start_);
 			
 			if((alaraja_ = strToFloat(luku_)) < -99998) {
-				cout << "Alarajan tulkinta ei onnistunut." << endl;
+				cout << "Settings: Alarajan tulkinta ei onnistunut." << endl;
 				return -1;
 			}	
  			
@@ -151,7 +151,7 @@ int Settings::parseSetLine(string tRivi) { // Puretaan asetusrivi ja talletetaan
 			luku_ = tRivi.substr(start_, end_ - start_);
 			
 			if((ylaraja_ = strToFloat(luku_)) < -99998) {
-				cout << "Ylärajan tulkinta ei onnistunut." << endl;
+				cout << "Settings: Ylärajan tulkinta ei onnistunut." << endl;
 				return -1;
 			}				
 			
@@ -188,7 +188,7 @@ float Settings::strToFloat(string sLuku) { // Merkkijonon tarkastus ja muunto li
    
    pos_ = sLuku.find_first_of("+-", 1); // (+) tai (-) vain ensimmäisenä merkkinä
    if (pos_ <= sLuku.size()) {
-		cout << "Virhe liukulukumuunnoksessa." << endl;
+		cout << "Settings: Virhe liukulukumuunnoksessa." << endl;
 		return luku_;
    }
    
@@ -203,7 +203,7 @@ float Settings::strToFloat(string sLuku) { // Merkkijonon tarkastus ja muunto li
    	start_ = pos_ + 1;
    }
    if(lkm_ > 1) {
-		cout << "Virhe liukulukumuunnoksessa." << endl;
+		cout << "Settings: Virhe liukulukumuunnoksessa." << endl;
 		return luku_;   
    }
    

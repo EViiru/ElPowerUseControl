@@ -1,13 +1,5 @@
 // Ohjauslogiikka
 
-#include <iostream>
-using std::cout;
-using std::endl;
-#include <array>
-using std::array;
-
-using std::string;
-
 #ifndef SPOTPRICES_HPP
 #define SPOTPRICES_HPP
 #include "SpotPrices.hpp"
@@ -27,6 +19,14 @@ using std::string;
 #define SHELLYPLUGS_HPP
 #include "ShellyPlugS.hpp"
 #endif
+
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <array>
+using std::array;
+
+using std::string;
 
 /**
 \brief Ohjaustoiminnot

@@ -25,7 +25,7 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 #ifdef SHELLYPLUGS
 	int currStInt_;
 	if ((currStInt_ = readOut()) < 0) {
-		cout << "Tiedon lukuvirhe" << endl;
+		cout << "ShellyPlugS: Tiedon lukuvirhe" << endl;
 		return -1;	
 	}
 	
@@ -70,14 +70,14 @@ int ShellyPlugS::readOut() { // Kytkennän tila
       response_ = ss1_.str();
    }
    else {
-   	cout << "Tiedoston luku epäonnistui" << endl;
+   	cout << "ShellyPlugS: Tiedoston luku epäonnistui, status" << endl;
    	return -1;
    }
 	if (response_.find("200 OK") != -1) { // Onnistuiko haku?
 //		cout << "Haku onnistui" << endl;
 	}
 	else {
-		cout << "Haku epäonnistui" << endl;
+		cout << "ShellyPlugS: Haku epäonnistui" << endl;
 		return -1;
 	}
 
@@ -89,14 +89,14 @@ int ShellyPlugS::readOut() { // Kytkennän tila
       status_ = ss2_.str();
    }
    else {
-   	cout << "Tiedoston luku epäonnistui" << endl;
+   	cout << "ShellyPlugS: Tiedoston luku epäonnistui, data" << endl;
    	return -1;   	
    }
 
    size_t start_, end_;
    start_ = status_.find("\"ison\":", 0); // Parametri "ison"
    if (start_ > status_.size()) {
-		cout << "Parametrin nimen haku epäonnistui" << endl;
+		cout << "ShellyPlugS: Parametrin nimen haku epäonnistui" << endl;
 		return -1;
    }
    end_ = status_.find(",", start_); // Parametrin loppu
@@ -112,7 +112,7 @@ int ShellyPlugS::readOut() { // Kytkennän tila
 	}
 #endif
 	
-	cout << "Parametrin arvon haku epäonnistui" << endl;
+	cout << "ShellyPlugS: Parametrin arvon haku epäonnistui" << endl;
 	return -1;
 
 }
