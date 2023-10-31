@@ -3,18 +3,18 @@
 #include "ShellyPlugS.hpp"
 #endif
 
-//#define SHELLYPLUGS // ShellyPlugS on käytössä
+#define SHELLYPLUGS // ShellyPlugS on käytössä
 
 ShellyPlugS::ShellyPlugS(string baseAddrIP) {
-	cout << "ShellyPlugS: Rakentaja" << endl;
-	
 	baseAddrIP_ = baseAddrIP; // Laitteen IP-osoite
+	cout << "ShellyPlugS/" << baseAddrIP_ << ": Rakentaja" << endl;
+	
 	setOut(false); // Nollataan lähtö
 
 }
 
 ShellyPlugS::~ShellyPlugS() {
-	cout << "ShellyPlugS: Purkaja" << endl;
+	cout << "ShellyPlugS/" << baseAddrIP_ << ": Purkaja" << endl;
 	
 	setOut(false); // Nollataan lähtö
 
@@ -25,7 +25,6 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 #ifdef SHELLYPLUGS
 	int currStInt_;
 	if ((currStInt_ = readOut()) < 0) {
-		cout << "ShellyPlugS: Tiedon lukuvirhe" << endl;
 		return -1;	
 	}
 	
@@ -43,6 +42,11 @@ int ShellyPlugS::setOut(bool out) { // Kytkennän ohjaus
 		}
 		endpCall_.append(" -O ./temp/StatusRel0.json -o ./temp/QueryStatus.txt");
 		system(endpCall_.data()); // Asetetaan lähdön tila
+
+		time_t now_ = time(NULL);		
+		cout << "Time: " << asctime(localtime(&now_)); 
+   	cout << "ShellyPlugS/" << baseAddrIP_ << ": " << out << endl;
+
 
 	}
 #endif
@@ -70,13 +74,17 @@ int ShellyPlugS::readOut() { // Kytkennän tila
       response_ = ss1_.str();
    }
    else {
-   	cout << "ShellyPlugS: Tiedoston luku epäonnistui, status" << endl;
+		time_t now_ = time(NULL);
+		cout << "Time: " << asctime(localtime(&now_)); 
+   	cout << "ShellyPlugS/" << baseAddrIP_ << ": Tiedoston luku epäonnistui, status" << endl;
    	return -1;
    }
 	if (response_.find("200 OK") != -1) { // Onnistuiko haku?
 	}
 	else {
-		cout << "ShellyPlugS: Haku epäonnistui" << endl;
+		time_t now_ = time(NULL);
+		cout << "Time: " << asctime(localtime(&now_)); 
+		cout << "ShellyPlugS/" << baseAddrIP_ << ": Haku epäonnistui" << endl;
 		return -1;
 	}
 
@@ -88,14 +96,18 @@ int ShellyPlugS::readOut() { // Kytkennän tila
       status_ = ss2_.str();
    }
    else {
-   	cout << "ShellyPlugS: Tiedoston luku epäonnistui, data" << endl;
+		time_t now_ = time(NULL);
+		cout << "Time: " << asctime(localtime(&now_)); 
+   	cout << "ShellyPlugS/" << baseAddrIP_ << ": Tiedoston luku epäonnistui, data" << endl;
    	return -1;   	
    }
 
    size_t start_, end_;
    start_ = status_.find("\"ison\":", 0); // Parametri "ison"
    if (start_ > status_.size()) {
-		cout << "ShellyPlugS: Parametrin nimen haku epäonnistui" << endl;
+		time_t now_ = time(NULL);
+		cout << "Time: " << asctime(localtime(&now_)); 
+		cout << "ShellyPlugS/" << baseAddrIP_ << ": Parametrin nimen haku epäonnistui" << endl;
 		return -1;
    }
    end_ = status_.find(",", start_); // Parametrin loppu
@@ -109,7 +121,7 @@ int ShellyPlugS::readOut() { // Kytkennän tila
 	}
 #endif
 	
-	cout << "ShellyPlugS: Parametrin arvon haku epäonnistui" << endl;
+	cout << "ShellyPlugS/" << baseAddrIP_ << ": Parametrin arvon haku epäonnistui" << endl;
 	return -1;
 
 }
