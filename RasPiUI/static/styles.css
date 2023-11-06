@@ -1,0 +1,29 @@
+/* Valikko */
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+li {
+	float: left;
+}
+li a {
+	font-size: 120%;
+	font-weight: bold;
+	display: block;
+/*	background-color: lightgrey;*/
+	background-color: #eeeeee;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/* Taulukko */
+
+table, th, td {
+	border: 2px solid black;
+}
+td {
+	text-align: center;
+}

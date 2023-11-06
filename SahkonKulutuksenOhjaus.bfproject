@@ -57,10 +57,8 @@ recent_files: file:///home/HDD_work/HDD_esko/gcc/ElSpotPrices/RasPiIO.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Control_tst.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Random.cpx
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Random.cpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.hpp
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.hpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/ElUseCntrl.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.hpp
@@ -68,16 +66,18 @@ recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Settings.cpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/Settings.hpp
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.hpp
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.hpp:192:33:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.cpp:1689:1045:1:
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.cpp
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.hpp:192:127:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ShellyPlugS.cpp:0:75:1:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Settings.hpp:1464:246:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Settings.cpp:985:0:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.hpp:692:918:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp:73:0:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiIO.cpp:0:0:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.hpp:1179:446:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/SpotPrices.cpp:6331:5240:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.hpp:1236:408:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.cpp:565:634:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.hpp:1236:436:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/Control.cpp:565:896:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/ElUseCntrl.cpp:152:99:0:
 last_filefilter: 
 adv_open_matchname: 0

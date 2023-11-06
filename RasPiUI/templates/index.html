@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+	<title>Sähkönkulutuksen ohjaus</title>
+</head>
+<body>
+<div>
+	<h1 align="center">Sähkönkulutuksen ohjaus v.0.2</h1>
+</div>
+<hr>
+<div style="width:100%;">
+	<!- Left column -->
+	<div style="width: 50%; float: left; border-right-style: groove; ">
+		<div align="center">
+			<h2>Asetusarvot</h2>
+			<p>
+				Tässä on esimerkkikappale.<br>
+				Tähän tulee asetusarvotaulukko.			
+			</p>		
+		</div>
+	</div>
+	<!- Right column -->
+	<div style="margin-left: 50%; ">
+		<div align="center">
+			<h2>Merkkivalot</h2>
+			<p>
+				Tässä on esimerkkikappale.<br>
+				Tähän tulee merkkivalot.			
+			</p>		
+		</div>
+	</div>
+</div><br><br>
+<hr>
+
+
+
+
+
+
+
+
+
+<br>
+
+
+<h1 align="center">
+Lähtöjen asetusarvot
+</h1>
+
+<div align="left">
+<table align="center" border=1>
+<col width="50">
+<col width="50">
+<col width="50">
+
+<th>
+Lähtö
+</th>
+<th>
+Alaraja
+</th>
+<th>
+Yläraja
+</th>
+
+<tr>
+<td><strong>Output</strong></td>
+<td>{{rajat['Output'][0]}}</td>
+<td>{{rajat['Output'][1]}}</td>
+</tr>
+<tr>
+<td><strong>Green</strong></td>
+<td>{{rajat['Green'][0]}}</td>
+<td>{{rajat['Green'][1]}}</td>
+</tr>
+<tr>
+<td><strong>Yellow</strong></td>
+<td>{{rajat['Yellow'][0]}}</td>
+<td>{{rajat['Yellow'][1]}}</td>
+</tr>
+<tr>
+<td><strong>Red</strong></td>
+<td>{{rajat['Red'][0]}}</td>
+<td>{{rajat['Red'][1]}}</td>
+</tr>
+
+</table>
+</div>
+
+<br><br>
+
+<div style="text-align: center;">
+<input type="submit" name="Submit" value="Asetusarvojen muutos">
+</div>
+
+<br><br><br>
+<div align="center">
+<div style="text-align:left; width: 600px; height:200px; overflow-y:scroll;">
+<p>Tähän joku pitkä teksti (xxx), jolla voi testata vierityspalkkien toimintaa. Kokeillaan ensin oikein pitkää riviä. Jos tuokaan ei ollut vielä riittävä, niin jatketaan vielä tällä. Jospa nyt jo riittäisi pituus.
+Ja sitten tyhjä rivi ja jatketaan uudella kappaleella.<br><br>
+Tähän joku pitkä teksti, jolla voi testata vierityspalkkien toimintaa. Kokeillaan ensin oikein pitkää riviä. Jos tuokaan ei ollut vielä riittävä, niin jatketaan vielä tällä. Jospa nyt jo riittäisi pituus.<br>
+Ja vielä vaan uusi kappale, että voi kokeillakin sen vierityspalkin toimintaa.
+Tähän joku pitkä teksti, jolla voi testata vierityspalkkien toimintaa. Kokeillaan ensin oikein pitkää riviä. Jos tuokaan ei ollut vielä riittävä, niin jatketaan vielä tällä. Jospa nyt jo riittäisi pituus.<br>
+Loppurivi.</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
+

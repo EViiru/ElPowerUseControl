@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Ohjauksen tilan näyttö -->
+<html>
+<head>
+<!-- <meta http-equiv="refresh" content="10"> -->
+</head>
+<body>
+	{% extends "baseUI.html" %}
+	{% block contents %}
+	
+	<h2>
+	<table width="40%"> <!-- Ohjauksen tila -->
+		<tr>
+			<td width="50%">Ohjaus:</td>
+			{% if run == True %}
+				<td  style="background-color: #00ff00; padding: 10px; ">Käynnissä</td>
+			{% else %}
+				<td  style="background-color: #ff0000; padding: 10px; ">Pysähdyksissä</td>
+			{% endif %}
+		</tr>
+	</table>
+	<br>
+	Asetukset ja lähtöjen tila
+	</h2>
+	<table width="80%"> <!-- Asetukset ja lähdöt (i/o) -->
+	<h3>
+		<tr style="height: 50px; ">
+			<th width="25%">Lähdön nimi</th>
+			<th width="25%">Alaraja</th>
+			<th width="25%">Yläraja</th>
+ 			<th width="25%">Lähdön tila</th>
+		</tr>
+	</h3>
+	
+	{% for out in settings %}
+		<tr style="height: 40px; ">
+			<td>{{out}}</td>
+			<td>{{settings[out][0]}}</td>
+			<td>{{settings[out][1]}}</td>
+			{% if outputs[out] and (out == "Green") %}
+				<td  style="background-color: #00ff00; padding: 10px; ">Päällä</td>
+			{% elif outputs[out] and (out == "Yellow") %}
+				<td  style="background-color: #ffff00; padding: 10px; ">Päällä</td>
+			{% elif outputs[out] %}
+				<td  style="background-color: #ff0000; padding: 10px; ">Päällä</td>
+			{% else %}
+				<td  style="padding: 10px; ">Pois</td>			
+			{% endif %}
+		</tr>
+	{% endfor %}
+	
+	</table>
+	
+	<h2><br>Lokitiedosto</h2>
+	(Uusin tieto ylimpänä)
+	<div style="text-align:left; width: 800px; height:300px; overflow-y:scroll; ">
+		<p>
+			{% for line in log %}
+				{{line}}<br>
+			{% endfor %}
+		</p>
+	</div>	
+	{% endblock %}
+</body>
+</html>

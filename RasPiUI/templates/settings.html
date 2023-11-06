@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Ohjauksen asetusten muutos -->
+<html>
+<body>
+	{% extends "baseUI.html" %}
+	{% block contents %}
+	<h2>Ohjauksen asetusten muutos</h2>
+	
+	<form action="/saveSettings" method="POST">
+	<table width="80%"> <!-- Asetukset ja lähdöt (i/o) -->
+	<h3>
+		<tr style="height: 50px; ">
+			<th width="25%">Lähdön nimi</th>
+			<th width="25%">Alaraja</th>
+			<th width="25%">Yläraja</th>
+		</tr>
+	</h3>
+	
+	{% for out in settings %}
+		{% set ala = out + "Ala" %}
+		{% set yla = out + "Yla" %}
+		<tr style="height: 40px; ">
+			<td>{{out}}</td>
+			<td><input type="text" name={{ala}} value={{settings[out][0]}}></td>
+			<td><input type="text" name={{yla}} value={{settings[out][1]}}></td>
+		</tr>
+	{% endfor %}
+	
+	</table><br>
+	<input type="submit" value="Lähetä asetukset" style="padding: 10px; ">
+	</form>
+	<br>
+	<form action="/startStop" method="POST">
+	<table width="40%"> <!-- Käynnistys / pysäytys -->
+		<tr style="height: 40px; ">
+			<td width="25%">Ohjaus:</td>
+			{% if run %}
+				{% set value = "Stop" %}
+				<td width="25%" style="background-color: #00ff00; ">Käynnissä</td>
+			{% else %}
+				{% set value = "Start" %}
+				<td width="25%" style="background-color: #ff0000; ">Pysähdyksissä</td>
+			{% endif %}
+			<td width="25%">
+				<input type="submit" name=nappi value={{value}} style="padding: 10px; ">			
+			</td>		
+		</tr>
+	</table>
+	</form>
+	{% endblock %}
+</body>
+
+</html>

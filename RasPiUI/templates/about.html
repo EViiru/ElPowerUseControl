@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Ohjelman tietojen näyttö -->
+<html>
+<body>
+	{% extends "baseUI.html" %}
+	{% block contents %}
+	<h2 align="left">Sähkönkulutuksen ohjaus ver.0.2</h2>
+	<p align="left">
+		Sähkönkulutuksen ohjaus on sulautettu Linux-ohjelma, joka on tehty Raspberry Pi-korttitietokoneelle.
+	</p>
+	<p align="left">
+		Ohjelma koostuu kahdesta pääkomponentista: käyttöliittymästä ja varsinaisesta ohjausohjelmasta. Käyttöliittymä on tehty Python Flask:illa ja ohjausohjelma C++:lla. Komponenttien välinen tiedonsiirto kulkee levyjärjestelmässä olevien tiedostojen välityksellä.<br>
+		Ohjausohjelmaa voidaan käyttää myös ilman käyttöliittymää, mutta silloin tarvittavat ohjaustoimenpiteet joudutaan tekemään suoraan ohjaustiedostoihin.
+	</p>
+	<h3 align="left">Ohjelman versiot</h3>
+	<p align="left">
+		<strong>Ver. 0.2</strong><br>
+		Tehty ohjausohjelmalle käyttöliittymä Python Falsk:illa.	
+	</p>
+	<p align="left">
+		<strong>Ver. 0.1</strong><br>
+		Ohjausohjelman ensimmäinen testattu versio ilman käyttöliittymää.	Ohjelma on tehty GNU C++:lla.
+	</p>
+	{% endblock %}
+</body>
+</html>
