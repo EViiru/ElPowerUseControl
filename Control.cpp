@@ -32,15 +32,25 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 		if((t_ - t_prev_) > 5) { //Suoritetaan 5s välein
 			t_prev_ = t_;
 			system("touch ./temp/alive"); // Vahtikoiralle ruokaa
+			system("touch ./temp/controlOn"); // Ohjaus käynnissä
 
 			// Tilan vaihto -> stop		
 			if(file_ = fopen ("stop","r")) {
 				fclose(file_);
 				system("rm stop");
-				system("rm ./temp/*");
+				if(file_ = fopen ("./temp/outputs.json","r")) {
+					fclose(file_);
+					system("rm ./temp/outputs.json");
+				}
 				break;
-			}	
+			}
 			
+			if(file_ = fopen ("update","r")) { // Asetuksia on muutettu
+				fclose(file_);
+				system("rm update");
+				ret_ = outOn_.updateSettings(FILENAME_SETTINGS); // Haetaan asetukset tiedostosta
+			}
+							
 			raspi_.setHbeat(heartBeat_);
 			heartBeat_ = !heartBeat_;
 		}
@@ -107,7 +117,32 @@ int Control::cntrlOn() { // Ohjaus käynnissä
 				cout << "Price: " << elPrice_ << " Red: " << outPut_ << endl;							
 			}				
 			raspi_.setRed(outPut_);					
-			
+
+			// Lähtöjen tila tiedostoon
+			fstream oFile_;
+			oFile_.open("./temp/outputs.json", ios::out | ios::trunc);
+			if (oFile_.is_open()){
+				oFile_ << "{" << endl;
+				oFile_ << "    \"Output\": ";
+				bitMask_ = 0x01;
+				bool(exOut_ & bitMask_) ? oFile_ << "true," : oFile_ << "false,";
+				oFile_ << endl;
+				oFile_ << "    \"Green\": ";
+				bitMask_ = 0x02;
+				bool(exOut_ & bitMask_) ? oFile_ << "true," : oFile_ << "false,";
+				oFile_ << endl;
+				oFile_ << "    \"Yellow\": ";
+				bitMask_ = 0x04;
+				bool(exOut_ & bitMask_) ? oFile_ << "true," : oFile_ << "false,";
+				oFile_ << endl;
+				oFile_ << "    \"Red\": ";
+				bitMask_ = 0x08;
+				bool(exOut_ & bitMask_) ? oFile_ << "true" : oFile_ << "false";
+				oFile_ << endl << "}" << endl;
+				
+				oFile_.close();				
+			}		
+						
 			exMin_ = cMin_;	
 		}
 
@@ -125,6 +160,10 @@ int Control::cntrlOff() { // Ohjaus pysähdyksissä
 		if((t_ - t_prev_) > 5) { //Suoritetaan 5s välein
 			t_prev_ = t_;
 			system("touch ./temp/alive"); // Vahtikoiralle ruokaa
+			if(file_ = fopen ("./temp/controlOn","r")) {
+				fclose(file_);
+				system("rm ./temp/controlOn"); // Ohjaus pysähdyksissä
+			}
 
 			// Tilan vaihto -> start					
 			if(file_ = fopen ("start","r")) {

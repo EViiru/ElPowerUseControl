@@ -3,7 +3,7 @@
 #include "ShellyPlugS.hpp"
 #endif
 
-#define SHELLYPLUGS // ShellyPlugS on käytössä
+//#define SHELLYPLUGS // ShellyPlugS on käytössä
 
 ShellyPlugS::ShellyPlugS(string baseAddrIP) {
 	baseAddrIP_ = baseAddrIP; // Laitteen IP-osoite

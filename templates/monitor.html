@@ -2,7 +2,7 @@
 <!-- Ohjauksen tilan näyttö -->
 <html>
 <head>
-<!-- <meta http-equiv="refresh" content="10"> -->
+<meta http-equiv="refresh" content="10">
 </head>
 <body>
 	{% extends "baseUI.html" %}
@@ -43,8 +43,10 @@
 				<td  style="background-color: #ffff00; padding: 10px; ">Päällä</td>
 			{% elif outputs[out] %}
 				<td  style="background-color: #ff0000; padding: 10px; ">Päällä</td>
+			{% elif outputs[out] == False %}
+				<td  style="padding: 10px; ">Pois</td>
 			{% else %}
-				<td  style="padding: 10px; ">Pois</td>			
+				<td  style="padding: 10px; ">N/A</td>							
 			{% endif %}
 		</tr>
 	{% endfor %}

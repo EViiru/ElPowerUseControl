@@ -11,14 +11,14 @@ app = Flask(__name__)
 # Ohjauksen seuranta, aloitusnäyttö
 @app.route("/")
 def monitor():
-	run = os.path.exists("controlOn") # Ohjaus käynnissä
+	run = os.path.exists("temp/controlOn") # Ohjaus käynnissä
 	if os.path.exists("settings.json"):	
 		with open("settings.json", "r", encoding="utf-8") as f: # Asetukset
 			settings = json.loads(f.read())
 	else:
 		settings = {} # Jos tiedostoa ei ole	
-	if os.path.exists("outputs.json"):	
-		with open("outputs.json", "r", encoding="utf-8") as f: # Lähdöt
+	if os.path.exists("temp/outputs.json"):	
+		with open("temp/outputs.json", "r", encoding="utf-8") as f: # Lähdöt
 			outputs = json.loads(f.read())
 	else:
 		outputs = {} # Jos tiedostoa ei ole
@@ -35,7 +35,7 @@ def monitor():
 # Asetusten muutos, vanhat pohjaksi
 @app.route("/settings")
 def settings():
-	run = os.path.exists("controlOn") # Ohjaus käynnissä	
+	run = os.path.exists("temp/controlOn") # Ohjaus käynnissä	
 	if os.path.exists("settings.json"):	
 		with open("settings.json", "r", encoding="utf-8") as f: # Asetukset
 			settings = json.loads(f.read())

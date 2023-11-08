@@ -67,7 +67,7 @@ class Control {
 		time_t const UPDATE_TIME = 8 * 3600; /**< Hintojen päivitys, aika ennen edellisten tietojen loppumista */
 		string const SHELLYPLUGS_IP = "http://192.168.10.37/"; /**< ShellyPlugS IP-osoite */
 		string const FILENAME_PRICES = "ElPrices_.csv"; /**< Tiedostonimen vakio-osa: Sähkön hinnat */
-		string const FILENAME_SETTINGS = "ohjausrajat.txt"; /**< Tiedostonimi: Asetukset */
+		string const FILENAME_SETTINGS = "settings.json"; /**< Tiedostonimi: Asetukset */
 		
 		Control(Control const& src); /**< Kopiorakentaja (oletus) estetty */
 		Control& operator=(Control const& src); /**< Sijoitus (oletus) estetty */

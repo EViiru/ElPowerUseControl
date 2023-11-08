@@ -52,7 +52,6 @@ class Settings {
 		float getHighLimit(string outName);
 		
 	private:
-		int parseSetLine(string tRivi); /**< Puretaan asetusrivi ja talletetaan muuttuneet asetukset */
 		float strToFloat(string sLuku); /**< Merkkijonon tarkastus ja muunto liukuluvuksi */
 		
 		// Ohjausrajat

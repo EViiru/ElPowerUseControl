@@ -32,42 +32,63 @@ Settings::~Settings() {
 	cout << "Settings: Purkaja" << endl;
 }
 
-int Settings::updateSettings(string fileName) { // Haetaan asetukset tiedostosta: ohjausrajat.txt
+int Settings::updateSettings(string fileName) { // Haetaan asetukset tiedostosta
 	// Haetaan asetusarvot tiedostosta
 	ifstream f3_(fileName);
-   string rajat_, tietorivi_;
+   string rajat_;
    ostringstream ss3_;
-
+   
    if(f3_) {
       ss3_ << f3_.rdbuf();
       rajat_ = ss3_.str();
       
-      size_t start_, end_, next_ = 0;
-      
+     size_t start_, end_, pos_;
+            		
+		start_ = 0;
    	while (1) {   	
-   		start_ = rajat_.find("//", next_); // Poistetaan kommentit
-   		if (start_ > rajat_.size()) {
+   		pos_ = rajat_.find_first_of(" \t\n", start_); // Poistetaan välilyönnit, tabulaattorit ja rivinvaihdot
+   		if (pos_ > rajat_.size()) {
    			break;
    		}
-   		end_ = rajat_.find("\n", start_);
-			rajat_.erase(start_, end_ - start_);
-   		next_ = start_;  		
+			rajat_.erase(pos_, 1);
+   		start_ = pos_;  		
    	}
-      
- 		next_ = 0;
-      while (1) {   	
-   		start_ = rajat_.find("##", next_); // Haetaan tietorivi
+
+		start_ = 0;
+		while (1) {
+			string nimi_, sAla_, sYla_;			
+
+			start_ = rajat_.find("\"", start_);
    		if (start_ > rajat_.size()) {
    			break;
    		}
-   		end_ = rajat_.find("\n", start_);
-			tietorivi_ = rajat_.substr(start_, end_ - start_);
-			
-			if(parseSetLine(tietorivi_))
-				cout << "Settings: Tietorivin tulkinta ei onnistunut." << endl;
-			
-   		next_ = end_;
-   	}	
+   		start_ ++;
+   		end_ = rajat_.find("\":", start_);
+   		nimi_ = rajat_.substr(start_, end_ - start_);
+   		
+   		start_ = end_;
+			start_ = rajat_.find("[", start_);
+			start_ ++;
+   		end_ = rajat_.find(",", start_);
+   		sAla_ = rajat_.substr(start_, end_ - start_);
+  		
+    		start_ = end_ + 1;
+   		end_ = rajat_.find("]", start_);
+   		sYla_ = rajat_.substr(start_, end_ - start_);
+ 		
+			OutputCntrl tempOut_;
+			tempOut_.Name_ = nimi_;
+			tempOut_.alar_ = strToFloat(sAla_);
+			tempOut_.ylar_ = strToFloat(sYla_);		
+						
+			for (vector<OutputCntrl>::iterator it_ = outputLimits_.begin() ; it_ != outputLimits_.end(); ++it_) {
+				outputCntrl_ = *it_;		
+				if(outputCntrl_.Name_ == nimi_) {
+					outputLimits_.erase(it_);
+				}
+			}
+			outputLimits_.push_back(tempOut_);			
+		}  		
    	
    	for (vector<OutputCntrl>::iterator it_ = outputLimits_.begin() ; it_ != outputLimits_.end(); ++it_) {
 			outputCntrl_ = *it_;
@@ -107,70 +128,6 @@ float Settings::getHighLimit(string outName) { // Lähdön ohjauksen yläraja
 	}
 	return raja_;
 }
-
-int Settings::parseSetLine(string tRivi) { // Puretaan asetusrivi ja talletetaan muuttuneet asetukset
-			size_t start_ = 0, end_, pos_;
-   		
-   		while (1) {   	
-   			pos_ = tRivi.find_first_of("# \t", start_); // Poistetaan ##, välilyönnit ja tabulaattorit
-   			if (pos_ > tRivi.size()) {
-   				break;
-   			}
-				tRivi.erase(pos_, 1);
-   			start_ = pos_;  		
-   		}
-   		
-   		start_ = 0;
-   		while (1) {   	
-   			pos_ = tRivi.find_first_of(",", start_); // Vaihdetaan (desimaali)pilkku pisteeksi
-   			if (pos_ > tRivi.size()) {
-   				break;
-   			}
-				tRivi.replace(pos_, 1, ".");
-   			start_ = pos_;  		
-   		}
-    					
-			string nimi_, luku_;			
-			float alaraja_, ylaraja_;			
-			start_ = 0;
-
-			end_ = tRivi.find(";", start_);
-			nimi_ = tRivi.substr(start_, end_ - start_);
-			
-			start_ = end_ + 1;
-			end_ = tRivi.find(";", start_);
-			luku_ = tRivi.substr(start_, end_ - start_);
-			
-			if((alaraja_ = strToFloat(luku_)) < -99998) {
-				cout << "Settings: Alarajan tulkinta ei onnistunut." << endl;
-				return -1;
-			}	
- 			
-			start_ = end_ + 1;
-			end_ = tRivi.find(";", start_);
-			luku_ = tRivi.substr(start_, end_ - start_);
-			
-			if((ylaraja_ = strToFloat(luku_)) < -99998) {
-				cout << "Settings: Ylärajan tulkinta ei onnistunut." << endl;
-				return -1;
-			}				
-			
-			OutputCntrl tempOut_;
-			tempOut_.Name_ = nimi_;
-			tempOut_.alar_ = alaraja_;
-			tempOut_.ylar_ = ylaraja_;		
-						
-			for (vector<OutputCntrl>::iterator it_ = outputLimits_.begin() ; it_ != outputLimits_.end(); ++it_) {
-				outputCntrl_ = *it_;		
-				if(outputCntrl_.Name_ == nimi_) {
-					outputLimits_.erase(it_);
-					outputLimits_.push_back(tempOut_);
-				}
-			}
-
-	return 0;
-}
-
 
 float Settings::strToFloat(string sLuku) { // Merkkijonon tarkastus ja muunto liukuluvuksi
 	float luku_ = -99999;
