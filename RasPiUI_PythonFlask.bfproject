@@ -36,17 +36,17 @@ leftpanel_active_tab: 0
 default_mime_type: text/plain
 c2e.IE_apos_workaround: 0
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiUI.py
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/baseUI.html
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/about.html
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/static/styles.css
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/settings.html
-recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/baseUI.html
 recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/monitor.html
+recent_files: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/settings.html
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/static/styles.css:0:0:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/about.html:0:0:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/settings.html:0:0:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/monitor.html:177:543:1:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/monitor.html:177:244:0:
 openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/templates/baseUI.html:0:0:0:
-openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiUI.py:0:0:0:
+openfiles: /home/esko/HDD_arkisto/gcc/ElSpotPrices/RasPiUI.py:1017:0:1:
 last_filefilter: 
 adv_open_matchname: 0
 editor_tab_width: 3
@@ -81,7 +81,7 @@ e2c.convert_xml: 1
 ssearch_casesens: 0
 fb_focus_follow: 1
 htmlbar_view: 1
-savedir: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices/templates
+savedir: file:///home/esko/HDD_arkisto/gcc/ElSpotPrices
 bmarksearchmode: 0
 enable_syntax_scan: 1
 e2c.convert_num: 0

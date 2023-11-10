@@ -1,0 +1,27 @@
+Sähkönkulutuksen ohjaus v.0.2
+
+Vaatimukset:
+* Python Flask
+    sudo apt install python3-flask
+* gunicorn
+    sudo apt install gunicorn
+
+Työhakemisto:
+* Ohjausohjelma, C++
+    Ohjelman kääntäminen: (-> ElUseCntrl)
+        g++ -c *.cpp
+        g++ *.o -o ElUseCntrl
+    settings.json (ohjelman asetukset)
+* Käyttöliittymä, Python Flask
+    RasPiUI.py
+    ./static/*.css
+    ./templates/*.html
+* Alihakemistot
+    ./data/ (sähkön hintahistoria)
+    ./temp/ (mielellään tmpfs)
+
+Apuohjelmat:
+* Käynnistys
+    ./startup.sh
+* Lokitiedoston lyhennys
+    ./logcut.sh

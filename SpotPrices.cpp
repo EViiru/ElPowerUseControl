@@ -13,7 +13,6 @@ SpotPrices::~SpotPrices() {
 }
 
 int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.net
-	cout << "SpotPrices: updatePrices" << endl;
 	
 	ostringstream ss1_, ss2_;
 	
@@ -22,6 +21,7 @@ int SpotPrices::updatePrices() { // Hakee hintatiedot API:sta: Pörssisähkö.ne
 	tm locTime_ = *localtime(&now_);
 	tm gmtTime_ = *gmtime(&now_);
 	cout << "Time: " << asctime(&locTime_);
+	cout << "SpotPrices: updatePrices" << endl;
 	tZone_ = locTime_.tm_hour - gmtTime_.tm_hour; // -23...+23
 	if(tZone_ <= -12 || tZone_ > 12) {
 		tZone_ = tZone_ - 24 * (tZone_ / abs(tZone_)); // -11...+12	
@@ -126,7 +126,7 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 	string extraDef_ = to_string(latestLInt_);
 	
 	size_t pos_;
-	if(pos_ = file.find("."))
+	if(pos_ = file.find(".", 2))
 		file.replace(pos_, 0, extraDef_);
 		
 	fstream oFile_;

@@ -4,6 +4,8 @@
 #endif
 
 Control::Control() {
+	time_t now_ = time(NULL);		
+	cout << endl << "Time: " << asctime(localtime(&now_)) << "Ohjelman käynnistys" << endl;
 	cout << "Control: Rakentaja" << endl;
 }
 

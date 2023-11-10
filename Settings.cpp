@@ -88,8 +88,11 @@ int Settings::updateSettings(string fileName) { // Haetaan asetukset tiedostosta
 				}
 			}
 			outputLimits_.push_back(tempOut_);			
-		}  		
-   	
+		}
+				
+   	time_t now_ = time(NULL);		
+		cout << "Time: " << asctime(localtime(&now_));
+
    	for (vector<OutputCntrl>::iterator it_ = outputLimits_.begin() ; it_ != outputLimits_.end(); ++it_) {
 			outputCntrl_ = *it_;
 			cout << outputCntrl_.Name_ << " ala: " << outputCntrl_.alar_ << " ylä: " << outputCntrl_.ylar_ << endl;		
