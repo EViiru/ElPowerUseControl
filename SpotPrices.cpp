@@ -126,8 +126,8 @@ int SpotPrices::savePrices(string file) { // Tallentaa hintatiedot tiedostoon
 	string extraDef_ = to_string(latestLInt_);
 	
 	size_t pos_;
-	if(pos_ = file.find(".", 2))
-		file.replace(pos_, 0, extraDef_);
+	if(pos_ = file.find("_.", 0))
+		file.replace(pos_ + 1, 0, extraDef_);
 		
 	fstream oFile_;
 	oFile_.open(file, ios::out | ios::trunc);

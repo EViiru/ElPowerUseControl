@@ -33,7 +33,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 * Sähkön hinnan ollessa asetuksissa määritettyä rajaa halvempi, kytketään Raspberry Pi:n ohjauslähtö ja wifi-ohjattava pistorasia päälle.@n
 * <p>
 * Ohjauslähdön lisäksi Raspberry Pi:n lähdöissä on varaukset merkkivaloille: vihreä, keltainen ja punainen. Ohjauslähdön ja merkkivalojen 
-* kytkentärajat määritetään asetustiedostossa: "ohjausrajat.txt".@n
+* kytkentärajat määritetään asetustiedostossa: "settings.json".@n
 * <p>
 * Ohjelmakierrossa on kaksi tilaa:
 * + sähkönhinnan seuranta ja sen mukaan ohjaus ovat päällä ja
@@ -43,7 +43,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 * + stop, kun halutaan ohjaus pois päältä tai
 * + start, kun halutaan hintaseuranta ja sen mukaan ohjaus päälle.@n
 * <p>
-* Vaihdettaessa tilaa stop -> start, ohjelma lukee (uudet) asetusarvot  tiedostosta "ohjausrajat.txt".
+* Vaihdettaessa tilaa stop -> start, ohjelma lukee asetusarvot  tiedostosta "settings.json".@n
+* Jos työhakemistossa on tiedosto "update", ohjelma lukee (uudet) asetusarvot  tiedostosta "settings.json".@n
+* <p>
+* Ohjelmalle on Python Flask'illa tehty web-käyttöliittymä: RasPiUI.py.
 */
 int main() {
 	int ret;

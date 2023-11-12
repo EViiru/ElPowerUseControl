@@ -1,12 +1,16 @@
 Sähkönkulutuksen ohjaus v.0.2
 
+Ohjausohjelma (ElUseCntrl) hakee pörssisähkön hinnat verkosta
+ja ohjaa lähtöjä sähkön hinnan mukaan.
+RasPiUI.py on web-käyttöliittymä ohjausohjelmalle.
+
 Vaatimukset:
 * Python Flask
     sudo apt install python3-flask
 * gunicorn
     sudo apt install gunicorn
 
-Työhakemisto:
+Työhakemisto <workdir>:
 * Ohjausohjelma, C++
     Ohjelman kääntäminen: (-> ElUseCntrl)
         g++ -c *.cpp
@@ -25,3 +29,11 @@ Apuohjelmat:
     ./startup.sh
 * Lokitiedoston lyhennys
     ./logcut.sh
+
+Automaattinen käynnistys:
+* Lisätään crontab'iin rivi:
+    @reboot sleep 60 && /home/<workdir>/startup.sh
+Automaattinen lokitiedoston lyhennys (kerran viikossa):
+* Lisätään crontab'iin rivi:
+    30 00 * * 1 /home/<workdir>/logcut.sh
+    
