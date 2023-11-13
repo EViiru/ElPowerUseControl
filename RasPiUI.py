@@ -1,3 +1,13 @@
+## @package RasPiUI Käyttöliittymä, sähkönkulutuksen ohjaus
+#
+# Web-käyttöliittymä Raspberry Pi-korttitietokoneessa toimivalle sähkönkulutuksen ohjaukselle.
+# Ohjelmointiympäristö Python Flask
+#
+# Käyttöliittymässä on kolme sivua:
+# * Ohjauksen tilan seuranta
+# * Ohjauksen tilan ja asetusten muutos
+# * Tietoja ohjelmasta
+
 """
 ***********************************************************************
 
@@ -27,10 +37,28 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import os, json
 from flask import Flask, request, render_template, redirect, url_for
 
+## Flask-sovellus
+#
+# \var app
+# + Flask-sovellus
+# \var debug
+# + True: testaus
+# + False: käyttö
+# \var port
+# + Kuunneltava portti
+# \var host
+# + Kuunneltava IP
 app = Flask(__name__)
 
 # Ohjauksen seuranta, aloitusnäyttö
 @app.route("/")
+## Tilanäyttö
+#
+# Sivulla näytetään:
+# * Ohjauksen tila: käynnissä / pysähdyksissä
+# * voimassaolevat asetukset ja
+# * lokitiedosto@n
+# <p>Tilaa ja asetuksia ei voi muuttaa.
 def monitor():
 	run = os.path.exists("temp/controlOn") # Ohjaus käynnissä
 	if os.path.exists("settings.json"):	
@@ -53,7 +81,12 @@ def monitor():
 	return render_template("monitor.html", run=run, settings=settings, outputs=outputs, log=log)
  
     
-# Asetusten muutos, vanhat pohjaksi
+## Asetusten muutos, aloitusnäyttö
+#
+# Sivulla näytetään:
+# * Ohjauksen tila: käynnissä / pysähdyksissä ja
+# * voimassaolevat asetukset@n
+# <p>Tilaa ja asetuksia voidaan muuttaa.
 @app.route("/settings")
 def settings():
 	run = os.path.exists("temp/controlOn") # Ohjaus käynnissä	
@@ -68,7 +101,9 @@ def settings():
 	return render_template("settings.html", run=run, settings=settings)
 
 
-# Asetusten muutos, uudet
+## Asetusten muutos, uudet asetukset
+#
+# Tallennetaan muutetut asetukset ja tehdään työhakemistoon tiedosto "update".
 @app.route("/saveSettings", methods = ["GET", "POST"])
 def saveSettings():
 	if request.method == "POST":
@@ -92,7 +127,9 @@ def saveSettings():
 	return redirect(url_for("monitor"))
 
 
-# Käynnistys / pysäytys
+## Asetusten muutos, käynnistys / pysäytys
+#
+# Tehdään työhakemistoon tiedosto "start" tai "stop".
 @app.route("/startStop", methods = ["GET", "POST"])
 def startStop():
 	if request.method == "POST":
@@ -111,7 +148,9 @@ def startStop():
 	return redirect(url_for("monitor"))
 
 
-# Tietoja ohjelmasta
+## Tietoja ohjelmasta
+#
+# Lyhyt kuvaus ohjelmasta ja ohjelman versio(t)
 @app.route("/about")
 def about():
 	return render_template("about.html")
