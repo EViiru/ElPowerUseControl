@@ -9,5 +9,5 @@ then
 	tail -n 100 $FILENAME.tmp > $FILENAME # Lyhennetty, riviä
 	rm $FILENAME.tmp
 	date >> $FILENAME
-	echo "Run logcit.sh" >> $FILENAME
+	echo "Run logcut.sh" >> $FILENAME
 fi
